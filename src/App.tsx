@@ -1,8 +1,15 @@
+import { Header } from "./components/Header";
+import NewsContentView from "./components/news-stand/NewsContentView";
+import NewsRolling from "./components/rolling/NewsRolling";
+
 function App() {
   return (
     <>
-      fe-react-news
-      <h1 className="display-bold16 text-weak underline">Hello world!</h1>
+      <div>
+        <Header />
+        <NewsRolling />
+        <NewsContentView />
+      </div>
     </>
   );
 }
