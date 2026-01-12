@@ -1,7 +1,7 @@
 @theme {
   /* font family */
-  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-    sans-serif;
+  --font-sans:
+    Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* ---------- font size tokens ---------- */
   --font-size-l: 24px;

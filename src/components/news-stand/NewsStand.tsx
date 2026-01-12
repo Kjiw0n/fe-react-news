@@ -1,3 +1,5 @@
-export default function NewsStand() {
-  return <div>NewsStand Component</div>;
-}
+const NewsStand = () => {
+  return <div>NewsStand</div>;
+};
+
+export default NewsStand;

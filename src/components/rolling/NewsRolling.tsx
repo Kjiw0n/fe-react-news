@@ -1,3 +1,5 @@
-export default function NewsRolling() {
-  return <div>NewsRolling Component</div>;
-}
+const NewsRolling = () => {
+  return <div>NewsRolling</div>;
+};
+
+export default NewsRolling;

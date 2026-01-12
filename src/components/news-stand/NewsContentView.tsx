@@ -1,3 +1,5 @@
-export default function NewsContentView() {
-  return <div>NewsContentView Component</div>;
-}
+const NewsContentView = () => {
+  return <div>NewsContentView</div>;
+};
+
+export default NewsContentView;

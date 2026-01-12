@@ -1,3 +1,5 @@
-export default function NewsTabs() {
-  return <div>NewsTabs Component</div>;
-}
+const NewsTabs = () => {
+  return <div>NewsTabs</div>;
+};
+
+export default NewsTabs;

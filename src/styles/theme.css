@@ -32,7 +32,7 @@
   --color-border-default: var(--color-grayscale-100);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-strong: var(--color-grayscale-white);
   --color-bold: var(--color-grayscale-50);
   --color-default: var(--color-grayscale-100);
