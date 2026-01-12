@@ -1,0 +1,97 @@
+@theme {
+  /* font family */
+  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    sans-serif;
+
+  /* ---------- font size tokens ---------- */
+  --font-size-l: 24px;
+  --font-size-m: 16px;
+  --font-size-r: 14px;
+  --font-size-s: 12px;
+
+  /* ---------- line-height ---------- */
+  --line-height-auto: normal;
+  --line-height-22: 22px;
+
+  /* ---------- font weight ---------- */
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+}
+
+@utility display-bold24 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-auto);
+}
+
+@utility display-bold16 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-auto);
+}
+
+@utility display-bold14 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-r);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-auto);
+}
+
+@utility display-bold12 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-auto);
+}
+
+@utility display-medium16 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-22);
+}
+
+@utility display-medium14 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-r);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-auto);
+}
+
+@utility display-medium12 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-auto);
+}
+
+/* semantic alias */
+@utility selected-bold16 {
+  @apply display-bold16;
+}
+
+@utility selected-bold14 {
+  @apply display-bold14;
+}
+
+@utility available-medium16 {
+  @apply display-medium16;
+}
+
+@utility available-medium14 {
+  @apply display-medium14;
+}
+
+@utility available-medium12 {
+  @apply display-medium12;
+}
+
+@utility hover-medium16 {
+  @apply display-medium16 underline;
+}
+
+@utility hover-medium14 {
+  @apply display-medium14 underline;
+}

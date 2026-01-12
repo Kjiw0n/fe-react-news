@@ -1,0 +1,51 @@
+@theme {
+  /* grayscale */
+  --color-grayscale-white: #ffffff;
+  --color-grayscale-white-alt: #ffffffb3;
+  --color-grayscale-50: #f5f7f9;
+  --color-grayscale-100: #d2dae0;
+  --color-grayscale-200: #879298;
+  --color-grayscale-300: #6e8091;
+  --color-grayscale-400: #5f6e76;
+  --color-grayscale-500: #4b5966;
+  --color-grayscale-black: #14212b;
+
+  /* blue */
+  --color-blue-100: #7890e7;
+  --color-blue-500: #4362d0;
+
+  /* semantic – light */
+  --color-strong: var(--color-grayscale-black);
+  --color-bold: var(--color-grayscale-500);
+  --color-default: var(--color-grayscale-400);
+  --color-weak: var(--color-grayscale-200);
+  --color-white-default: var(--color-grayscale-white);
+  --color-white-weak: var(--color-grayscale-white-alt);
+  --color-point: var(--color-blue-500);
+
+  --color-surface-default: var(--color-grayscale-white);
+  --color-surface-alt: var(--color-grayscale-50);
+  --color-surface-brand-default: var(--color-blue-500);
+  --color-surface-brand-alt: var(--color-blue-100);
+
+  --color-border-bold: var(--color-grayscale-300);
+  --color-border-default: var(--color-grayscale-100);
+}
+
+[data-theme="dark"] {
+  --color-strong: var(--color-grayscale-white);
+  --color-bold: var(--color-grayscale-50);
+  --color-default: var(--color-grayscale-100);
+  --color-weak: var(--color-grayscale-white-alt);
+  --color-white-default: var(--color-grayscale-white);
+  --color-white-weak: var(--color-grayscale-white-alt);
+  --color-point: var(--color-blue-500);
+
+  --color-surface-default: var(--color-grayscale-black);
+  --color-surface-alt: var(--color-grayscale-500);
+  --color-surface-brand-default: var(--color-blue-500);
+  --color-surface-brand-alt: var(--color-blue-100);
+
+  --color-border-bold: var(--color-grayscale-white-alt);
+  --color-border-default: var(--color-grayscale-400);
+}
