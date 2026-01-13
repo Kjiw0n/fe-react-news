@@ -1,5 +1,5 @@
 import Icon from '@/assets/svg';
-import { updateDate } from '@/utils/date';
+import { updateDate } from '@/utils/utils';
 
 const Header = () => {
   const date = updateDate();
