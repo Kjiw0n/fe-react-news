@@ -50,7 +50,7 @@ const NewsStand = () => {
           <GridView pressData={pressData} />
         </TabsContent>
         <TabsContent value={TAB_VALUES.LIST}>
-          <ListView />
+          <ListView pressData={pressData} />
         </TabsContent>
       </Tabs>
     </div>

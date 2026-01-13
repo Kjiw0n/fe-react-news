@@ -1,24 +1,63 @@
-import { CATEGORY_LIST, type Category } from '@/constants/types/type';
-import { useState } from 'react';
+import {
+  CATEGORY_LIST,
+  type Category,
+  type PressData,
+} from '@/constants/types/type';
+import { useEffect, useState } from 'react';
 
-const ListView = () => {
+interface ListViewProps {
+  pressData: PressData[] | null;
+}
+
+const ITEM_CYCLE_INTERVAL_MS = 20000;
+
+const ListView = ({ pressData }: ListViewProps) => {
+  const groupedData = groupByCategory(pressData || []);
+  const categoryList = Object.keys(groupedData) as Category[];
+
   const [selectedCategory, setSelectedCategory] = useState<Category>(
-    CATEGORY_LIST[0],
+    categoryList[0],
   );
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIdx(
+        (prevIdx) =>
+          (prevIdx + 1) %
+          (groupedData ? groupedData[selectedCategory].length : 1),
+      );
+    }, ITEM_CYCLE_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, [groupedData, pressData, selectedCategory]);
+
+  if (!pressData) return <div>Loading...</div>;
+
+  const handleTabClick = (category: Category) => {
+    setSelectedCategory(category);
+    setIdx(0);
+  };
+
   return (
     <div className="flex w-232.5 flex-col">
       <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start border">
-        {CATEGORY_LIST.map((category) => (
+        {categoryList.map((category) => (
           <div
-            key={category}
+            key={`${category}-${idx}`}
             className={`flex cursor-pointer flex-row items-center gap-2 px-4 hover:underline ${
               selectedCategory === category
                 ? 'selected-bold14 text-white-default bg-brand-60 bg-fill-progress animate-fill-progress'
                 : 'available-medium14 text-weak'
             }`}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => handleTabClick(category)}
           >
-            {category}
+            <span>{category}</span>
+            {selectedCategory === category && (
+              <span>
+                {idx + 1}/{groupedData[category].length}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -53,7 +92,8 @@ const ListView = () => {
               <li>직원 복지 확대 기업 늘며 ‘조직문화 투자’ 확산</li>
             </ul>
             <span className="display-medium14 text-weak">
-              서울경제 언론사에서 직접 편집한 뉴스입니다.
+              {groupedData[selectedCategory][idx].press} 언론사에서 직접 편집한
+              뉴스입니다.
             </span>
           </div>
         </div>
@@ -63,3 +103,15 @@ const ListView = () => {
 };
 
 export default ListView;
+
+const groupByCategory = (data: PressData[]): Record<Category, PressData[]> => {
+  const grouped: Record<Category, PressData[]> = Object.fromEntries(
+    CATEGORY_LIST.map((category) => [category, [] as PressData[]]),
+  ) as Record<Category, PressData[]>;
+
+  data.forEach((item) => {
+    grouped[item.category].push(item);
+  });
+
+  return grouped;
+};
