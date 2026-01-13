@@ -26,13 +26,13 @@ const GridView = ({ pressData }: GridViewProps) => {
       ))}
       {pageIdx > 0 && (
         <Icon.IconArrowLeft
-          className="absolute top-1/2 -left-11.75 h-10 w-6"
+          className="absolute top-1/2 -left-11.75 h-10 w-6 -translate-y-1/2 cursor-pointer"
           onClick={() => setPageIdx(pageIdx - 1)}
         />
       )}
       {pageIdx < pressData.length / 24 - 1 && (
         <Icon.IconArrowRight
-          className="absolute top-1/2 -right-11.75 h-10 w-6"
+          className="absolute top-1/2 -right-11.75 h-10 w-6 -translate-y-1/2 cursor-pointer"
           onClick={() => setPageIdx(pageIdx + 1)}
         />
       )}
