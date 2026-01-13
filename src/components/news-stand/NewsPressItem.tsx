@@ -20,7 +20,7 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
   if (showButton) {
     return (
       <div
-        className="bg-surface-alt flex h-[96.25px] w-full items-center justify-center border"
+        className="border-border-default bg-surface-alt flex h-[96.25px] w-full items-center justify-center border-r border-b"
         onMouseLeave={() => setShowButton(false)}
       >
         <SubscribeButton pressName={pressData.press} />
