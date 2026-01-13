@@ -11,7 +11,7 @@ import { useEffect, useState, useMemo } from 'react';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
 const NewsStand = () => {
-  const [allPressData, setAllPressData] = useState<PressData[] | null>(null);
+  const [allPressData, setAllPressData] = useState<PressData[]>([]);
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ALL);
   const { subscribedPressIds } = useSubscriptionStore();
 
