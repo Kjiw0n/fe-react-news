@@ -20,7 +20,7 @@ const MediaSourceTab = ({ setActiveTab }: MediaSourceTabProps) => {
             className={cn(
               // 기본 상태 (비활성화 시 색상)
               'bg-surface-brand-alt text-white-weak',
-              'display-medium12 flex h-5 w-5 items-center justify-center rounded-full p-0.75',
+              'display-medium12 flex h-5 w-5 items-center justify-center rounded-md p-0.75',
               // 부모(TabsTrigger)가 active일 때의 색상
               'group-data-[state=active]/trigger:bg-surface-brand-default group-data-[state=active]/trigger:text-white-default',
             )}
