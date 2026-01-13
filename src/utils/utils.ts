@@ -15,3 +15,20 @@ export function updateDate(): string {
 
   return `${yyyy}. ${mm}. ${dd}. ${days[day]}요일`;
 }
+
+/**
+ * 배열의 요소를 무작위로 섞어서 새로운 배열을 반환하는 함수 (Fisher-Yates Shuffle)
+ *
+ * @function shuffle
+ * @param {T[]} array - 무작위로 섞을 원본 배열
+ * @returns {T[]} 요소를 무작위 순서로 재배치한 새로운 배열
+ * @template T
+ */
+export function shuffle<T>(array: T[]) {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
