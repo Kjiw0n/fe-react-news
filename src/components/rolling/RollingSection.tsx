@@ -54,7 +54,7 @@ const RollingSection = ({
 
   return (
     <div 
-      className="w-115 h-12 overflow-hidden border border-border-default bg-surface-alt"
+      className="w-115 h-12 overflow-hidden border border-border-default bg-surface-alt cursor-pointer"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
