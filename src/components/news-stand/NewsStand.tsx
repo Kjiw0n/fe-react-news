@@ -4,12 +4,23 @@ import NewsContentView from './NewsContentView';
 import NewsTabs from './NewsTabs';
 import type { PressData } from '@/constants/types/type';
 import NewsPressItem from './NewsPressItem';
+import { useEffect, useState } from 'react';
 
-interface NewsStandProps {
-  pressData: PressData[] | null;
-}
+const NewsStand = () => {
+  const [pressData, setPressData] = useState<PressData[] | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/press-data');
+        const data = await res.json();
+        setPressData(data);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
 
-const NewsStand = ({ pressData }: NewsStandProps) => {
+    fetchData();
+  }, []);
   if (!pressData) {
     return <div>Loading...</div>;
   }
