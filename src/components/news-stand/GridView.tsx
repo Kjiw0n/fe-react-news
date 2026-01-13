@@ -21,8 +21,8 @@ const GridView = ({ pressData }: GridViewProps) => {
 
   return (
     <div className="relative grid grid-cols-6">
-      {gridItems.map((item, index) => (
-        <NewsPressItem key={item?.press || `empty-${index}`} data={item} />
+      {gridItems.map((data, index) => (
+        <NewsPressItem key={data?.press || `empty-${index}`} pressData={data} />
       ))}
       {pageIdx > 0 && (
         <Icon.IconArrowLeft

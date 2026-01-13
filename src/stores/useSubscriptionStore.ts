@@ -1,25 +1,23 @@
 import { create } from 'zustand';
 
 interface SubscriptionStore {
-  subscribedPressIds: string[];
+  subscribedPresses: string[];
   subscribe: (pressId: string) => void;
   unsubscribe: (pressId: string) => void;
   isSubscribed: (pressId: string) => boolean;
 }
 
 const useSubscriptionStore = create<SubscriptionStore>((set, get) => ({
-  subscribedPressIds: [],
+  subscribedPresses: [],
   subscribe: (pressId) =>
     set((state) => ({
-      subscribedPressIds: [...state.subscribedPressIds, pressId],
+      subscribedPresses: [...state.subscribedPresses, pressId],
     })),
   unsubscribe: (pressId) =>
     set((state) => ({
-      subscribedPressIds: state.subscribedPressIds.filter(
-        (id) => id !== pressId,
-      ),
+      subscribedPresses: state.subscribedPresses.filter((id) => id !== pressId),
     })),
-  isSubscribed: (pressId) => get().subscribedPressIds.includes(pressId),
+  isSubscribed: (pressId) => get().subscribedPresses.includes(pressId),
 }));
 
 export default useSubscriptionStore;

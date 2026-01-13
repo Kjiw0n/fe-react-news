@@ -9,7 +9,7 @@ interface MediaSourceTabProps {
 }
 
 const MediaSourceTab = ({ setActiveTab }: MediaSourceTabProps) => {
-  const { subscribedPressIds } = useSubscriptionStore();
+  const { subscribedPresses } = useSubscriptionStore();
   return (
     <Tabs defaultValue={TAB_VALUES.ALL} onValueChange={setActiveTab}>
       <TabsList className="gap-6">
@@ -25,7 +25,7 @@ const MediaSourceTab = ({ setActiveTab }: MediaSourceTabProps) => {
               'group-pressData-[state=active]/trigger:bg-surface-brand-default group-pressData-[state=active]/trigger:text-white-default',
             )}
           >
-            {subscribedPressIds.length}
+            {subscribedPresses.length}
           </span>
         </TabsTrigger>
       </TabsList>

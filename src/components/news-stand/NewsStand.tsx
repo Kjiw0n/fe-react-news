@@ -13,7 +13,7 @@ import useSubscriptionStore from '@/stores/useSubscriptionStore';
 const NewsStand = () => {
   const [allPressData, setAllPressData] = useState<PressData[]>([]);
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ALL);
-  const { subscribedPressIds } = useSubscriptionStore();
+  const { subscribedPresses } = useSubscriptionStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,10 +33,10 @@ const NewsStand = () => {
     () =>
       activeTab === TAB_VALUES.SUBSCRIBED && allPressData
         ? allPressData.filter((press) =>
-            subscribedPressIds.includes(press.press),
+            subscribedPresses.includes(press.press),
           )
         : allPressData,
-    [activeTab, allPressData, subscribedPressIds],
+    [activeTab, allPressData, subscribedPresses],
   );
 
   return (
