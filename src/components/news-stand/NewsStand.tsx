@@ -1,23 +1,26 @@
 import { Tabs, TabsContent } from '../ui/tabs';
-import NewsTabs from './NewsTabs';
+import ViewLayoutSwitcher from './ViewLayoutSwitcher';
+
+import { TAB_VALUES } from '@/constants/tabs';
+import ListView from './ListView';
+import MediaSourceTab from './MediaSourceTab';
+import GridView from './GridView';
 
 import type { PressData } from '@/constants/types/type';
-import NewsPressItem from './NewsPressItem';
-import { useEffect, useState } from 'react';
-import { TAB_VALUES } from '@/constants/tabs';
-import { Skeleton } from '../ui/skeleton';
-import ListView from './ListView';
+import { useEffect, useState, useMemo } from 'react';
+import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
 const NewsStand = () => {
-  const [pressData, setPressData] = useState<PressData[] | null>(null);
-  const [page, setPage] = useState(0);
+  const [allPressData, setAllPressData] = useState<PressData[] | null>(null);
+  const [activeTab, setActiveTab] = useState(TAB_VALUES.ALL);
+  const { subscribedPressIds } = useSubscriptionStore();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch('/api/press-data');
         const data = await res.json();
-        setPressData(data);
+        setAllPressData(data);
       } catch (error) {
         console.error('Fetch error:', error);
       }
@@ -26,30 +29,27 @@ const NewsStand = () => {
     fetchData();
   }, []);
 
+  const pressData = useMemo(
+    () =>
+      activeTab === TAB_VALUES.SUBSCRIBED && allPressData
+        ? allPressData.filter((press) =>
+            subscribedPressIds.includes(press.press),
+          )
+        : allPressData,
+    [activeTab, allPressData, subscribedPressIds],
+  );
+
   return (
     <div className="flex flex-col gap-6">
-      {/* <NewsContentView /> */}
-      <Tabs defaultValue={TAB_VALUES.ALL}>
-        <NewsTabs />
-        <TabsContent value={TAB_VALUES.ALL}>
-          <div className="grid grid-cols-6">
-            {!pressData
-              ? Array.from({ length: 24 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex h-[96.25px] w-full items-center justify-center border"
-                  >
-                    <Skeleton className="h-5 w-24" />
-                  </div>
-                ))
-              : pressData
-                  .slice(page * 24, (page + 1) * 24)
-                  .map((item) => (
-                    <NewsPressItem key={item.press} data={item} />
-                  ))}
-          </div>
+      <Tabs defaultValue={TAB_VALUES.GRID}>
+        <div className="flex justify-between">
+          <MediaSourceTab setActiveTab={setActiveTab} />
+          <ViewLayoutSwitcher />
+        </div>
+        <TabsContent value={TAB_VALUES.GRID}>
+          <GridView pressData={pressData} />
         </TabsContent>
-        <TabsContent value={TAB_VALUES.SUBSCRIBED}>
+        <TabsContent value={TAB_VALUES.LIST}>
           <ListView />
         </TabsContent>
       </Tabs>
