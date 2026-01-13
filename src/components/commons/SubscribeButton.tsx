@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import Alert from '@/components/commons/Alert';
+import SubscribeAlert from '@/components/commons/SubscribeAlert';
 import type { PressData } from '@/constants/types/type';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
@@ -31,7 +31,7 @@ const SubscribeButton = ({
         {isSubscribed(pressData.press) ? '× 해지하기' : '+ 구독하기'}
       </Button>
       {showAlert && (
-        <Alert
+        <SubscribeAlert
           open={showAlert}
           onOpenChange={setShowAlert}
           onComplete={onSubscribeComplete}

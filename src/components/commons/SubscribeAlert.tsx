@@ -10,14 +10,19 @@ import {
 } from '@/components/ui/alert-dialog';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
-interface AlertProps {
+interface SubscribeAlertProps {
   pressName: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onComplete: () => void;
 }
 
-const Alert = ({ pressName, open, onOpenChange, onComplete }: AlertProps) => {
+const SubscribeAlert = ({
+  pressName,
+  open,
+  onOpenChange,
+  onComplete,
+}: SubscribeAlertProps) => {
   const { unsubscribe } = useSubscriptionStore();
   const handleUnsubscribe = () => {
     unsubscribe(pressName);
@@ -52,4 +57,4 @@ const Alert = ({ pressName, open, onOpenChange, onComplete }: AlertProps) => {
   );
 };
 
-export default Alert;
+export default SubscribeAlert;
