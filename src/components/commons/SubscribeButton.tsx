@@ -5,9 +5,10 @@ import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
 interface SubscribeButtonProps {
   pressName: string;
+  onClick?: () => void;
 }
 
-const SubscribeButton = ({ pressName }: SubscribeButtonProps) => {
+const SubscribeButton = ({ pressName, onClick }: SubscribeButtonProps) => {
   const { isSubscribed, subscribe } = useSubscriptionStore();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -17,6 +18,7 @@ const SubscribeButton = ({ pressName }: SubscribeButtonProps) => {
       return;
     }
     subscribe(pressName);
+    onClick?.();
   };
 
   return (
