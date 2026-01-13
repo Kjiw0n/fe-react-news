@@ -5,9 +5,9 @@ interface RollingItemProps {
 
 const RollingItem = ({ title, content }: RollingItemProps) => {
   return (
-    <div className="bg-surface-alt border-border-default flex h-12 w-full flex-row items-center gap-4 border p-4">
+    <div className="flex h-12 w-full flex-row items-center gap-4 p-4">
       <span className="display-bold14 text-strong">{title}</span>
-      <span className="available-medium14 text-default">{content}</span>
+      <span className="available-medium14 text-default hover:underline">{content}</span>
     </div>
   );
 };
