@@ -38,7 +38,11 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
         src={pressData.logo}
         alt={pressData.press}
         loading="lazy"
-        style={{ width: 'auto', height: '20px' }}
+        style={{
+          width: 'auto',
+          height: '20px',
+          userSelect: 'none',
+          WebkitUserSelect: 'none' }}
       />
     </div>
   );
