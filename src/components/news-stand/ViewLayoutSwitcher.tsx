@@ -6,10 +6,10 @@ const ViewLayoutSwitcher = () => {
   return (
     <TabsList className="gap-2">
       <TabsTrigger value={TAB_VALUES.LIST}>
-        <Icon.IconListView className="h-6 w-6" />
+        <Icon.IconListView className="size-6" />
       </TabsTrigger>
       <TabsTrigger value={TAB_VALUES.GRID}>
-        <Icon.IconGridView className="h-6 w-6" />
+        <Icon.IconGridView className="size-6" />
       </TabsTrigger>
     </TabsList>
   );
