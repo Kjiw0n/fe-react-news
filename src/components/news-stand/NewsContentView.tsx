@@ -1,5 +1,5 @@
 const NewsContentView = () => {
-  return <div>NewsContentView</div>;
+  return <div>dddd</div>;
 };
 
 export default NewsContentView;
