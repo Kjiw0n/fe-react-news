@@ -20,7 +20,7 @@ const GridView = ({ pressData }: GridViewProps) => {
   );
 
   return (
-    <div className="relative grid grid-cols-6">
+    <div className="relative grid grid-cols-6 border-border-default border-t border-l">
       {gridItems.map((item, index) => (
         <NewsPressItem key={item?.press || `empty-${index}`} data={item} />
       ))}
