@@ -5,15 +5,21 @@ import {
 } from '@/constants/types/type';
 import { useEffect, useMemo, useState } from 'react';
 import SubscribeButton from '@/components/commons/SubscribeButton';
+import { TAB_VALUES } from '@/constants/tabs';
 
 interface ListViewProps {
   pressData: PressData[] | null;
   switchToSubscribedTab: () => void;
+  activeTab?: string;
 }
 
 const ITEM_CYCLE_INTERVAL_MS = 20000;
 
-const ListView = ({ pressData, switchToSubscribedTab }: ListViewProps) => {
+const ListView = ({
+  pressData,
+  switchToSubscribedTab,
+  activeTab,
+}: ListViewProps) => {
   const groupedData = useMemo(
     () => groupByCategory(pressData || []),
     [pressData],
@@ -49,7 +55,7 @@ const ListView = ({ pressData, switchToSubscribedTab }: ListViewProps) => {
 
   return (
     <div className="flex w-232.5 flex-col">
-      <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start border">
+      <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start overflow-x-auto border whitespace-nowrap">
         {categoryList.map((category) => (
           <div
             key={`${category}-${pageIdx}`}
@@ -62,11 +68,19 @@ const ListView = ({ pressData, switchToSubscribedTab }: ListViewProps) => {
           >
             <span>{category}</span>
             {selectedTab === category && (
-              <div className="display-bold12 text-white-weak flex flex-row items-center gap-1">
-                <span className="text-white-default">{pageIdx + 1}</span>
-                <span>/</span>
-                <span>{groupedData[category].length}</span>
-              </div>
+              <>
+                {activeTab === TAB_VALUES.ALL ? (
+                  <div className="display-bold12 text-white-weak flex flex-row items-center gap-1">
+                    <span className="text-white-default">{pageIdx + 1}</span>
+                    <span>/</span>
+                    <span>{groupedData[category].length}</span>
+                  </div>
+                ) : (
+                  <span className="text-white-default mb-0.5 flex w-3.5 flex-row items-center">
+                    {'>'}
+                  </span>
+                )}
+              </>
             )}
           </div>
         ))}

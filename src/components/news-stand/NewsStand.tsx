@@ -57,6 +57,7 @@ const NewsStand = () => {
           <ListView
             pressData={pressData}
             switchToSubscribedTab={switchToSubscribedTab}
+            activeTab={activeTab}
           />
         </TabsContent>
       </Tabs>
