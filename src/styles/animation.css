@@ -1,0 +1,32 @@
+@keyframes fill-progress {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@layer utilities {
+  .bg-brand-60 {
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface-brand-default),
+      transparent 40%
+    );
+  }
+
+  .bg-fill-progress {
+    background-image: linear-gradient(
+      to right,
+      var(--color-surface-brand-default),
+      var(--color-surface-brand-default)
+    );
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+  }
+
+  .animate-fill-progress {
+    animation: fill-progress 20s linear forwards;
+  }
+}
