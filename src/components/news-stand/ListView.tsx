@@ -11,7 +11,11 @@ const ListView = () => {
         {CATEGORY_LIST.map((category) => (
           <div
             key={category}
-            className="available-medium14 text-weak flex cursor-pointer flex-row items-center gap-2 px-4 hover:underline"
+            className={`flex cursor-pointer flex-row items-center gap-2 px-4 hover:underline ${
+              selectedCategory === category
+                ? 'selected-bold14 text-white-default bg-brand-60 bg-fill-progress animate-fill-progress'
+                : 'available-medium14 text-weak'
+            }`}
             onClick={() => setSelectedCategory(category)}
           >
             {category}
