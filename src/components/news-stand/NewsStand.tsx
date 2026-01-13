@@ -1,11 +1,12 @@
 import { Tabs, TabsContent } from '../ui/tabs';
-import NewsContentView from './NewsContentView';
 import NewsTabs from './NewsTabs';
+
 import type { PressData } from '@/constants/types/type';
 import NewsPressItem from './NewsPressItem';
 import { useEffect, useState } from 'react';
 import { TAB_VALUES } from '@/constants/tabs';
 import { Skeleton } from '../ui/skeleton';
+import ListView from './ListView';
 
 const NewsStand = () => {
   const [pressData, setPressData] = useState<PressData[] | null>(null);
@@ -49,7 +50,7 @@ const NewsStand = () => {
           </div>
         </TabsContent>
         <TabsContent value={TAB_VALUES.SUBSCRIBED}>
-          <div>tab2</div>
+          <ListView />
         </TabsContent>
       </Tabs>
     </div>
