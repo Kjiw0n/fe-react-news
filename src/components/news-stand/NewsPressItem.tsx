@@ -6,15 +6,12 @@ interface NewsPressItemProps {
 
 const NewsPressItem = ({ data }: NewsPressItemProps) => {
   return (
-    <div className="h-[154.17px] w-[96.25px] bg-amber-100">
+    <div className="flex h-[96.25px] w-full items-center justify-center border">
       <img
         src={data.logo}
         alt={data.press}
         loading="lazy"
-        width={600}
-        height={400}
-        // 반응형 대응
-        style={{ width: '100%', height: 'auto' }}
+        style={{ width: 'auto', height: '20px' }}
       />
     </div>
   );
