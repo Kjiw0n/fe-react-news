@@ -9,18 +9,18 @@ interface RollingSectionProps {
   delay?: number;
   isPaused: boolean;
   onMouseEnter: () => void;
-  onMouseLeave: () => void; 
+  onMouseLeave: () => void;
 }
 
 const DURATION = 500;
 
-const RollingSection = ({ 
-  track, 
-  interval = 5000, 
-  delay = 0, 
-  isPaused, 
-  onMouseEnter, 
-  onMouseLeave 
+const RollingSection = ({
+  track,
+  interval = 5000,
+  delay = 0,
+  isPaused,
+  onMouseEnter,
+  onMouseLeave,
 }: RollingSectionProps) => {
   const data = rollingNews[track];
   const [index, setIndex] = useState(0);
@@ -53,8 +53,8 @@ const RollingSection = ({
   const next = data[(index + 1) % data.length];
 
   return (
-    <div 
-      className="w-115 h-12 overflow-hidden border border-border-default bg-surface-alt cursor-pointer"
+    <div
+      className="border-border-default bg-surface-alt h-12 w-115 cursor-pointer overflow-hidden border"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

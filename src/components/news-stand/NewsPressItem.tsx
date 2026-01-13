@@ -1,6 +1,7 @@
-import type { PressData } from '@/constants/types/type';
+import { ThemeState, type PressData } from '@/constants/types/type';
 import SubscribeButton from '../commons/SubscribeButton';
 import { useState } from 'react';
+import { useThemeStore } from '@/stores/useThemeStore';
 
 interface NewsPressItemProps {
   pressData: PressData | null;
@@ -8,6 +9,7 @@ interface NewsPressItemProps {
 
 const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
   const [showButton, setShowButton] = useState(false);
+  const { theme } = useThemeStore();
 
   // 빈 칸인 경우
   if (!pressData) {
@@ -28,6 +30,11 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
     );
   }
 
+  const logoSrc =
+    theme === ThemeState.DARK && pressData.darkLogo
+      ? pressData.darkLogo
+      : pressData.logo;
+
   // 데이터가 있는 경우 (기본 상태)
   return (
     <div
@@ -35,14 +42,15 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
       onMouseEnter={() => setShowButton(true)}
     >
       <img
-        src={pressData.logo}
+        src={logoSrc}
         alt={pressData.press}
         loading="lazy"
         style={{
           width: 'auto',
           height: '20px',
           userSelect: 'none',
-          WebkitUserSelect: 'none' }}
+          WebkitUserSelect: 'none',
+        }}
       />
     </div>
   );

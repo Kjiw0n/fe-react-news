@@ -9,7 +9,13 @@ export const CATEGORY_LIST = [
   '지역',
 ] as const;
 
+export const ThemeState = {
+  LIGHT: 'light',
+  DARK: 'dark',
+};
+
 export type Category = (typeof CATEGORY_LIST)[number];
+export type ThemeState = (typeof ThemeState)[keyof typeof ThemeState];
 
 // Related Article Type
 export interface RelatedArticle {
@@ -23,6 +29,7 @@ export interface PressData {
   currentPage: string;
   totalPage: string;
   logo: string;
+  darkLogo: string;
   press: string;
   time: string;
   mainTitle: string;
