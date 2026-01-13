@@ -2,8 +2,17 @@ import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import NewsContentView from './NewsContentView';
 import NewsTabs from './NewsTabs';
+import type { PressData } from '@/constants/types/type';
+import NewsPressItem from './NewsPressItem';
 
-const NewsStand = () => {
+interface NewsStandProps {
+  pressData: PressData[] | null;
+}
+
+const NewsStand = ({ pressData }: NewsStandProps) => {
+  if (!pressData) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="flex flex-col gap-6">
       <NewsTabs />
@@ -19,7 +28,7 @@ const NewsStand = () => {
                 'bg-surface-brand-alt text-white-weak',
                 'display-medium12 flex h-5 w-5 items-center justify-center rounded-full p-0.75',
                 // 부모(TabsTrigger)가 active일 때의 색상
-                'group-data-[state=active]/trigger:bg-surface-brand-default group-data-[state=active]/trigger:text-white-default',
+                'group-pressData-[state=active]/trigger:bg-surface-brand-default group-pressData-[state=active]/trigger:text-white-default',
               )}
             >
               9
@@ -27,7 +36,13 @@ const NewsStand = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="all">
-          <div>tab1</div>
+          <div className="grid grid-cols-6">
+            {pressData
+              .filter((_, index) => index < 24)
+              .map((item) => (
+                <NewsPressItem data={item} />
+              ))}
+          </div>
         </TabsContent>
         <TabsContent value="subscribed">
           <div>tab2</div>
