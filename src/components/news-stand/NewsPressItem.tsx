@@ -1,6 +1,5 @@
 import { ThemeState, type PressData } from '@/constants/types/type';
 import SubscribeButton from '../commons/SubscribeButton';
-import { useState } from 'react';
 import { useThemeStore } from '@/stores/useThemeStore';
 
 interface NewsPressItemProps {
@@ -27,7 +26,7 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
     <div className="group border-border-default relative flex h-[96.25px] w-full items-center justify-center border-r border-b">
       <div className="flex items-center justify-center group-hover:hidden">
         <img
-          src={pressData.logo}
+          src={logoSrc}
           alt={pressData.press}
           loading="lazy"
           className="h-5 w-auto select-none"
