@@ -23,7 +23,7 @@ const SubscribeButton = ({ pressName, onClick }: SubscribeButtonProps) => {
 
   return (
     <>
-      <Button size="sm" className="w-18" onClick={handleClick}>
+      <Button size="sm" className="w-18 cursor-pointer" onClick={handleClick}>
         {isSubscribed(pressName) ? '× 해지하기' : '+ 구독하기'}
       </Button>
       {showAlert && (
