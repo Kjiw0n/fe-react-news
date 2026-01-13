@@ -30,3 +30,15 @@ export interface PressData {
   mainImg: string;
   relatedArticles: RelatedArticle[];
 }
+
+// Rolling News Item
+export interface RollingNewsItem {
+  provider: string;
+  headline: string;
+}
+
+// Rolling News Data
+export interface RollingNewsData {
+  left: RollingNewsItem[];
+  right: RollingNewsItem[];
+}
