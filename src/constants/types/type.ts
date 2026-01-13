@@ -1,12 +1,15 @@
 // Category Type
-export type Category =
-  | '종합/경제'
-  | '방송/통신'
-  | 'IT'
-  | '영자지'
-  | '스포츠/연예'
-  | '매거진/전문지'
-  | '지역';
+export const CATEGORY_LIST = [
+  '종합/경제',
+  '방송/통신',
+  'IT',
+  '영자지',
+  '스포츠/연예',
+  '매거진/전문지',
+  '지역',
+] as const;
+
+export type Category = (typeof CATEGORY_LIST)[number];
 
 // Related Article Type
 export interface RelatedArticle {
