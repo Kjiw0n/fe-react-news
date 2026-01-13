@@ -1,14 +1,11 @@
 import type { PressData } from '@/constants/types/type';
 import SubscribeButton from '../commons/SubscribeButton';
-import { useState } from 'react';
 
 interface NewsPressItemProps {
   pressData: PressData | null;
 }
 
 const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
-  const [showButton, setShowButton] = useState(false);
-
   // 빈 칸인 경우
   if (!pressData) {
     return (
@@ -16,34 +13,21 @@ const NewsPressItem = ({ pressData }: NewsPressItemProps) => {
     );
   }
 
-  // SubButton을 보여줄 때
-  if (showButton) {
-    return (
-      <div
-        className="border-border-default bg-surface-alt flex h-[96.25px] w-full items-center justify-center border-r border-b"
-        onMouseLeave={() => setShowButton(false)}
-      >
+  return (
+    <div className="group relative border-border-default flex h-[96.25px] w-full items-center justify-center border-r border-b">
+      <div className="flex items-center justify-center group-hover:hidden">
+        <img
+          src={pressData.logo}
+          alt={pressData.press}
+          loading="lazy"
+          className="h-5 w-auto select-none"
+          style={{ WebkitUserSelect: 'none' }}
+        />
+      </div>
+
+      <div className="bg-surface-alt absolute inset-0 hidden items-center justify-center group-hover:flex">
         <SubscribeButton pressName={pressData.press} />
       </div>
-    );
-  }
-
-  // 데이터가 있는 경우 (기본 상태)
-  return (
-    <div
-      className="border-border-default flex h-[96.25px] w-full items-center justify-center border-r border-b"
-      onMouseEnter={() => setShowButton(true)}
-    >
-      <img
-        src={pressData.logo}
-        alt={pressData.press}
-        loading="lazy"
-        style={{
-          width: 'auto',
-          height: '20px',
-          userSelect: 'none',
-          WebkitUserSelect: 'none' }}
-      />
     </div>
   );
 };
