@@ -3,7 +3,7 @@ import {
   type Category,
   type PressData,
 } from '@/constants/types/type';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import SubButton from '../commons/SubButton';
 
 interface ListViewProps {
@@ -13,31 +13,31 @@ interface ListViewProps {
 const ITEM_CYCLE_INTERVAL_MS = 20000;
 
 const ListView = ({ pressData }: ListViewProps) => {
-  const groupedData = groupByCategory(pressData || []);
+  const groupedData = useMemo(
+    () => groupByCategory(pressData || []),
+    [pressData],
+  );
   const categoryList = Object.keys(groupedData) as Category[];
 
-  const [selectedCategory, setSelectedCategory] = useState<Category>(
-    categoryList[0],
-  );
-  const [idx, setIdx] = useState(0);
+  const [selectedTab, setSelectedTab] = useState<Category>(categoryList[0]);
+  const [pageIdx, setPageIdx] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIdx(
+      setPageIdx(
         (prevIdx) =>
-          (prevIdx + 1) %
-          (groupedData ? groupedData[selectedCategory].length : 1),
+          (prevIdx + 1) % (groupedData ? groupedData[selectedTab].length : 1),
       );
     }, ITEM_CYCLE_INTERVAL_MS);
 
     return () => clearInterval(interval);
-  }, [groupedData, pressData, selectedCategory]);
+  }, [groupedData, pressData, selectedTab]);
 
   if (!pressData) return <div>Loading...</div>;
 
   const handleTabClick = (category: Category) => {
-    setSelectedCategory(category);
-    setIdx(0);
+    setSelectedTab(category);
+    setPageIdx(0);
   };
 
   return (
@@ -45,19 +45,21 @@ const ListView = ({ pressData }: ListViewProps) => {
       <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start border">
         {categoryList.map((category) => (
           <div
-            key={`${category}-${idx}`}
+            key={`${category}-${pageIdx}`}
             className={`flex cursor-pointer flex-row items-center gap-2 px-4 hover:underline ${
-              selectedCategory === category
-                ? 'selected-bold14 text-white-default bg-brand-60 bg-fill-progress animate-fill-progress'
+              selectedTab === category
+                ? 'selected-bold14 text-white-default bg-brand-60 bg-fill-progress animate-fill-progress w-41.5 justify-between'
                 : 'available-medium14 text-weak'
             }`}
             onClick={() => handleTabClick(category)}
           >
             <span>{category}</span>
-            {selectedCategory === category && (
-              <span>
-                {idx + 1}/{groupedData[category].length}
-              </span>
+            {selectedTab === category && (
+              <div className="display-bold12 text-weak flex flex-row items-center gap-1">
+                <span className="text-white-default">{pageIdx + 1}</span>
+                <span>/</span>
+                <span>{groupedData[category].length}</span>
+              </div>
             )}
           </div>
         ))}
@@ -67,32 +69,32 @@ const ListView = ({ pressData }: ListViewProps) => {
         <div className="flex flex-row items-center justify-start gap-4">
           <img
             className="h-5 w-13"
-            src={groupedData[selectedCategory][idx].logo}
+            src={groupedData[selectedTab][pageIdx].logo}
             alt="news logo"
           />
           <span className="display-medium12 text-default">
-            {groupedData[selectedCategory][idx].time}
+            {groupedData[selectedTab][pageIdx].time}
           </span>
-          <SubButton pressName={groupedData[selectedCategory][idx].press} />
+          <SubButton pressName={groupedData[selectedTab][pageIdx].press} />
         </div>
 
         <div className="flex flex-row gap-8">
           <a
             className="flex flex-col gap-4"
-            href={groupedData[selectedCategory][idx].mainLink}
+            href={groupedData[selectedTab][pageIdx].mainLink}
           >
             <img
               className="h-50 w-[320px] object-cover"
-              src={groupedData[selectedCategory][idx].mainImg}
+              src={groupedData[selectedTab][pageIdx].mainImg}
               alt="news-preview"
             />
             <span className="available-medium16 text-strong h-11 w-[320px] overflow-y-hidden wrap-break-word whitespace-normal">
-              {groupedData[selectedCategory][idx].mainTitle}
+              {groupedData[selectedTab][pageIdx].mainTitle}
             </span>
           </a>
           <div className="flex flex-col gap-4">
             <ul className="available-medium16 text-bold flex flex-col gap-4">
-              {groupedData[selectedCategory][idx].relatedArticles.map(
+              {groupedData[selectedTab][pageIdx].relatedArticles.map(
                 (article) => (
                   <li
                     key={article.link}
@@ -104,7 +106,7 @@ const ListView = ({ pressData }: ListViewProps) => {
               )}
             </ul>
             <span className="display-medium14 text-weak">
-              {groupedData[selectedCategory][idx].press} 언론사에서 직접 편집한
+              {groupedData[selectedTab][pageIdx].press} 언론사에서 직접 편집한
               뉴스입니다.
             </span>
           </div>
