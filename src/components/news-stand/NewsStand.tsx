@@ -39,6 +39,10 @@ const NewsStand = () => {
     [activeTab, allPressData, subscribedPresses],
   );
 
+  const switchToSubscribedTab = () => {
+    setActiveTab(TAB_VALUES.SUBSCRIBED);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <Tabs defaultValue={TAB_VALUES.GRID}>
@@ -50,7 +54,10 @@ const NewsStand = () => {
           <GridView pressData={pressData} />
         </TabsContent>
         <TabsContent value={TAB_VALUES.LIST}>
-          <ListView pressData={pressData} />
+          <ListView
+            pressData={pressData}
+            switchToSubscribedTab={switchToSubscribedTab}
+          />
         </TabsContent>
       </Tabs>
     </div>

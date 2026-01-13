@@ -8,16 +8,23 @@ import SubscribeButton from '@/components/commons/SubscribeButton';
 
 interface ListViewProps {
   pressData: PressData[] | null;
+  switchToSubscribedTab: () => void;
 }
 
 const ITEM_CYCLE_INTERVAL_MS = 20000;
 
-const ListView = ({ pressData }: ListViewProps) => {
+const ListView = ({ pressData, switchToSubscribedTab }: ListViewProps) => {
   const groupedData = useMemo(
     () => groupByCategory(pressData || []),
     [pressData],
   );
-  const categoryList = Object.keys(groupedData) as Category[];
+  const categoryList = useMemo(
+    () =>
+      Object.keys(groupedData).filter(
+        (category) => groupedData[category as Category].length > 0,
+      ) as Category[],
+    [groupedData],
+  );
 
   const [selectedTab, setSelectedTab] = useState<Category>(categoryList[0]);
   const [pageIdx, setPageIdx] = useState(0);
@@ -55,7 +62,7 @@ const ListView = ({ pressData }: ListViewProps) => {
           >
             <span>{category}</span>
             {selectedTab === category && (
-              <div className="display-bold12 text-weak flex flex-row items-center gap-1">
+              <div className="display-bold12 text-white-weak flex flex-row items-center gap-1">
                 <span className="text-white-default">{pageIdx + 1}</span>
                 <span>/</span>
                 <span>{groupedData[category].length}</span>
@@ -77,6 +84,7 @@ const ListView = ({ pressData }: ListViewProps) => {
           </span>
           <SubscribeButton
             pressName={groupedData[selectedTab][pageIdx].press}
+            onClick={switchToSubscribedTab}
           />
         </div>
 
