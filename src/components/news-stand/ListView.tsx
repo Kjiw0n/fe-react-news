@@ -4,7 +4,7 @@ import {
   type PressData,
 } from '@/constants/types/type';
 import { useEffect, useMemo, useState } from 'react';
-import SubButton from '../commons/SubButton';
+import SubscribeButton from '@/components/commons/SubscribeButton';
 
 interface ListViewProps {
   pressData: PressData[] | null;
@@ -75,7 +75,9 @@ const ListView = ({ pressData }: ListViewProps) => {
           <span className="display-medium12 text-default">
             {groupedData[selectedTab][pageIdx].time}
           </span>
-          <SubButton pressName={groupedData[selectedTab][pageIdx].press} />
+          <SubscribeButton
+            pressName={groupedData[selectedTab][pageIdx].press}
+          />
         </div>
 
         <div className="flex flex-row gap-8">
