@@ -22,7 +22,7 @@ const MediaSourceTab = ({ setActiveTab }: MediaSourceTabProps) => {
               'bg-surface-brand-alt text-white-weak',
               'display-medium12 flex h-5 w-5 items-center justify-center rounded-full p-0.75',
               // 부모(TabsTrigger)가 active일 때의 색상
-              'group-pressData-[state=active]/trigger:bg-surface-brand-default group-pressData-[state=active]/trigger:text-white-default',
+              'group-data-[state=active]/trigger:bg-surface-brand-default group-data-[state=active]/trigger:text-white-default',
             )}
           >
             {subscribedPresses.length}

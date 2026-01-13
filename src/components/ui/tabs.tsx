@@ -41,11 +41,11 @@ function TabsTrigger({
       className={cn(
         'group/trigger',
         // 기본 레이아웃
-        'inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1',
+        'inline-flex h-[calc(100%-1px)] flex-1 cursor-pointer items-center justify-center gap-1',
         // 간격 및 텍스트
         'available-medium16 whitespace-nowrap',
         // 색상
-        'text-weak dark:text-white',
+        'text-weak fill-weak dark:text-white',
         // 전환 효과
         'transition-[color,box-shadow]',
         // 포커스 상태
@@ -54,7 +54,7 @@ function TabsTrigger({
         // 비활성화 상태
         'disabled:pointer-events-none disabled:opacity-50',
         // 활성화 상태
-        'data-[state=active]:text-strong data-[state=active]:selected-bold16',
+        'data-[state=active]:text-strong data-[state=active]:selected-bold16 data-[state=active]:fill-point',
         // 다크모드 활성화 상태
         'dark:data-[state=active]:text-white',
         'dark:data-[state=active]:border-input',
