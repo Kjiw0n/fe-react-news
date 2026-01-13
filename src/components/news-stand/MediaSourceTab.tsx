@@ -5,16 +5,23 @@ import { cn } from '@/lib/utils';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
 interface MediaSourceTabProps {
+  activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
-const MediaSourceTab = ({ setActiveTab }: MediaSourceTabProps) => {
+const MediaSourceTab = ({ activeTab, setActiveTab }: MediaSourceTabProps) => {
   const { subscribedPresses } = useSubscriptionStore();
   return (
-    <Tabs defaultValue={TAB_VALUES.ALL} onValueChange={setActiveTab}>
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="gap-6">
-        <TabsTrigger value={TAB_VALUES.ALL}>전체 언론사</TabsTrigger>
-        <TabsTrigger value={TAB_VALUES.SUBSCRIBED}>
+        <TabsTrigger className="cursor-pointer" value={TAB_VALUES.ALL}>
+          전체 언론사
+        </TabsTrigger>
+        <TabsTrigger
+          className="cursor-pointer"
+          value={TAB_VALUES.SUBSCRIBED}
+          disabled={subscribedPresses.length === 0}
+        >
           <span>내가 구독한 언론사</span>
           <span
             className={cn(

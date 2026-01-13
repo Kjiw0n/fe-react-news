@@ -43,7 +43,7 @@ const NewsStand = () => {
     <div className="flex flex-col gap-6">
       <Tabs defaultValue={TAB_VALUES.GRID}>
         <div className="flex justify-between">
-          <MediaSourceTab setActiveTab={setActiveTab} />
+          <MediaSourceTab activeTab={activeTab} setActiveTab={setActiveTab} />
           <ViewLayoutSwitcher />
         </div>
         <TabsContent value={TAB_VALUES.GRID}>
