@@ -14,19 +14,16 @@ interface SubscribeAlertProps {
   pressName: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onComplete: () => void;
 }
 
 const SubscribeAlert = ({
   pressName,
   open,
   onOpenChange,
-  onComplete,
 }: SubscribeAlertProps) => {
   const { unsubscribe } = useSubscriptionStore();
   const handleUnsubscribe = () => {
     unsubscribe(pressName);
-    onComplete();
   };
 
   return (

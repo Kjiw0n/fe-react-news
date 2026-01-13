@@ -6,13 +6,9 @@ import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
 interface SubscribeButtonProps {
   pressData: PressData;
-  onSubscribeComplete: () => void; // 구독 완료 후 호출되는 핸들러
 }
 
-const SubscribeButton = ({
-  pressData,
-  onSubscribeComplete,
-}: SubscribeButtonProps) => {
+const SubscribeButton = ({ pressData }: SubscribeButtonProps) => {
   const { isSubscribed, subscribe } = useSubscriptionStore();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -22,7 +18,6 @@ const SubscribeButton = ({
       return;
     }
     subscribe(pressData.press);
-    onSubscribeComplete();
   };
 
   return (
@@ -34,7 +29,6 @@ const SubscribeButton = ({
         <SubscribeAlert
           open={showAlert}
           onOpenChange={setShowAlert}
-          onComplete={onSubscribeComplete}
           pressName={pressData.press}
         />
       )}
