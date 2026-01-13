@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes roll-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-3rem); /* h-12 */
+  }
+}
+
 @layer utilities {
   .bg-brand-60 {
     background-color: color-mix(
