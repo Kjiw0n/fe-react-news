@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 
 const NewsStand = () => {
   const [pressData, setPressData] = useState<PressData[] | null>(null);
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,9 +23,11 @@ const NewsStand = () => {
 
     fetchData();
   }, []);
+
   if (!pressData) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="flex flex-col gap-6">
       <NewsTabs />
@@ -48,11 +52,9 @@ const NewsStand = () => {
         </TabsList>
         <TabsContent value="all">
           <div className="grid grid-cols-6">
-            {pressData
-              .filter((_, index) => index < 24)
-              .map((item) => (
-                <NewsPressItem data={item} />
-              ))}
+            {pressData.slice(page * 24, (page + 1) * 24).map((item) => (
+              <NewsPressItem data={item} />
+            ))}
           </div>
         </TabsContent>
         <TabsContent value="subscribed">
