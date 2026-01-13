@@ -31,7 +31,7 @@ const ListView = ({ pressData }: ListViewProps) => {
     }, ITEM_CYCLE_INTERVAL_MS);
 
     return () => clearInterval(interval);
-  }, [groupedData, pressData, selectedTab]);
+  }, [groupedData, pressData, selectedTab, pageIdx]);
 
   if (!pressData) return <div>Loading...</div>;
 
