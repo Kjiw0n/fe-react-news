@@ -1,15 +1,19 @@
-import IconArrowLeft from '@/assets/svg/arrow-left.svg';
-import IconArrowRight from '@/assets/svg/arrow-right.svg';
-import IconGridView from '@/assets/svg/grid-view.svg';
-import IconListView from '@/assets/svg/list-view.svg';
-import IconNewsPaper from '@/assets/svg/newspaper.svg';
+import ArrowLeft from '@/assets/svg/arrow-left.svg';
+import ArrowRight from '@/assets/svg/arrow-right.svg';
+import GridView from '@/assets/svg/view-grid.svg';
+import NewsPaper from '@/assets/svg/newspaper.svg';
+import ModeDark from '@/assets/svg/mode-dark.svg';
+import ModeBright from '@/assets/svg/mode-light.svg';
+import ListView from '@/assets/svg/view-list.svg';
 
 const Icon = {
-    IconArrowLeft,
-    IconArrowRight,
-    IconGridView,
-    IconListView,
-    IconNewsPaper,
-}
+  ArrowLeft,
+  ArrowRight,
+  GridView,
+  ListView,
+  NewsPaper,
+  ModeDark,
+  ModeBright,
+};
 
 export default Icon;

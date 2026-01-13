@@ -32,13 +32,13 @@ const GridView = ({ pressData }: GridViewProps) => {
         <NewsPressItem key={item?.press || `empty-${index}`} pressData={item} />
       ))}
       {pageIdx > 0 && (
-        <Icon.IconArrowLeft
+        <Icon.ArrowLeft
           className="absolute top-1/2 -left-11.75 h-10 w-6 -translate-y-1/2 cursor-pointer"
           onClick={() => setPageIdx(pageIdx - 1)}
         />
       )}
       {pageIdx < selectedData.length / 24 - 1 && (
-        <Icon.IconArrowRight
+        <Icon.ArrowRight
           className="absolute top-1/2 -right-11.75 h-10 w-6 -translate-y-1/2 cursor-pointer"
           onClick={() => setPageIdx(pageIdx + 1)}
         />

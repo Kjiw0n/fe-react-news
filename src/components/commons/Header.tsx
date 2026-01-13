@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <div className="mb-10 flex flex-row items-center justify-between">
       <div className="flex flex-row gap-2">
-        <Icon.IconNewsPaper
+        <Icon.NewsPaper
           className="fill-point h-6 w-6 cursor-pointer"
           onClick={onCLickLogo}
         />
