@@ -13,6 +13,25 @@ export const setSubscribedNames = (names: string[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(names));
 };
 
+// pressName 파라미터 검증
+const validatePressName = (
+  pressName: string | null,
+):
+  | { isValid: true; pressName: string }
+  | { isValid: false; error: Response } => {
+  if (!pressName) {
+    return {
+      isValid: false,
+      error: HttpResponse.json(
+        { success: false, error: 'pressName is required' },
+        { status: 400 },
+      ),
+    };
+  }
+
+  return { isValid: true, pressName };
+};
+
 export const subscriptionHandlers = [
   // 구독한 언론사 이름들 가져오기
   http.get('/api/subscription', () => {
@@ -23,26 +42,26 @@ export const subscriptionHandlers = [
   // 구독 취소
   http.delete('/api/subscription', async ({ request }) => {
     const url = new URL(request.url);
-    const pressName = url.searchParams.get('pressName');
+    const pressNameParam = url.searchParams.get('pressName');
 
-    if (!pressName) {
-      return HttpResponse.json(
-        { success: false, error: 'pressName is required' },
-        { status: 400 },
-      );
+    const validation = validatePressName(pressNameParam);
+    if (!validation.isValid) {
+      return validation.error;
     }
 
     const currentNames = getSubscribedNames();
 
     // 구독 중이 아닌 언론사인지 확인
-    if (!currentNames.includes(pressName)) {
+    if (!currentNames.includes(validation.pressName)) {
       return HttpResponse.json(
         { success: false, error: '구독 중이 아닌 언론사입니다' },
         { status: 404 },
       );
     }
 
-    const updatedNames = currentNames.filter((name) => name !== pressName);
+    const updatedNames = currentNames.filter(
+      (name) => name !== validation.pressName,
+    );
     setSubscribedNames(updatedNames);
     return HttpResponse.json({ success: true });
   }),
@@ -50,18 +69,16 @@ export const subscriptionHandlers = [
   // 구독 추가
   http.post('/api/subscription', async ({ request }) => {
     const url = new URL(request.url);
-    const pressName = url.searchParams.get('pressName');
+    const pressNameParam = url.searchParams.get('pressName');
 
-    if (!pressName) {
-      return HttpResponse.json(
-        { success: false, error: 'pressName is required' },
-        { status: 400 },
-      );
+    const validation = validatePressName(pressNameParam);
+    if (!validation.isValid) {
+      return validation.error;
     }
 
     const currentNames = getSubscribedNames();
-    if (!currentNames.includes(pressName)) {
-      currentNames.push(pressName);
+    if (!currentNames.includes(validation.pressName)) {
+      currentNames.push(validation.pressName);
       setSubscribedNames(currentNames);
     }
     return HttpResponse.json({ success: true });

@@ -38,14 +38,48 @@ const mapToGridView = (data: PressData[]) => {
   }));
 };
 
+// view 파라미터 검증
+const validateViewParameter = (
+  view: string | null,
+):
+  | { isValid: true; view: 'grid' | 'list' }
+  | { isValid: false; error: Response } => {
+  if (!view) {
+    return {
+      isValid: false,
+      error: HttpResponse.json(
+        { success: false, error: 'view parameter is required' },
+        { status: 400 },
+      ),
+    };
+  }
+
+  if (view !== 'grid' && view !== 'list') {
+    return {
+      isValid: false,
+      error: HttpResponse.json(
+        { success: false, error: 'view must be either "grid" or "list"' },
+        { status: 400 },
+      ),
+    };
+  }
+
+  return { isValid: true, view };
+};
+
 export const pressHandlers = [
   // 전체 언론사 조회
   http.get('/api/press/all', ({ request }) => {
     const url = new URL(request.url);
-    const view = url.searchParams.get('view');
+    const viewParam = url.searchParams.get('view');
+
+    const validation = validateViewParameter(viewParam);
+    if (!validation.isValid) {
+      return validation.error;
+    }
 
     const responseData =
-      view === 'grid'
+      validation.view === 'grid'
         ? mapToGridView(pressData as PressData[])
         : groupByCategory(pressData as PressData[]);
 
@@ -55,14 +89,19 @@ export const pressHandlers = [
   // 구독한 언론사 조회
   http.get('/api/press/subscribed', ({ request }) => {
     const url = new URL(request.url);
-    const view = url.searchParams.get('view');
+    const viewParam = url.searchParams.get('view');
+
+    const validation = validateViewParameter(viewParam);
+    if (!validation.isValid) {
+      return validation.error;
+    }
 
     const subscribedList = (pressData as PressData[]).filter((p) =>
       getSubscribedNames().includes(p.press),
     );
 
     const responseData =
-      view === 'grid'
+      validation.view === 'grid'
         ? mapToGridView(subscribedList as PressData[])
         : groupByPress(subscribedList as PressData[]);
 
