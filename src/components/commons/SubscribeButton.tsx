@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import SubscribeAlert from '@/components/commons/SubscribeAlert';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
+import { TAB_VALUES, type TabValue } from '@/constants/type';
 
 interface SubscribeButtonProps {
   pressName: string;
-  onClick?: () => void;
+  switchTab?: (tabType: TabValue) => void;
 }
 
-const SubscribeButton = ({ pressName, onClick }: SubscribeButtonProps) => {
+const SubscribeButton = ({ pressName, switchTab }: SubscribeButtonProps) => {
   const { isSubscribed, subscribe } = useSubscriptionStore();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -18,7 +19,7 @@ const SubscribeButton = ({ pressName, onClick }: SubscribeButtonProps) => {
       return;
     }
     subscribe(pressName);
-    onClick?.();
+    switchTab?.(TAB_VALUES.SUBSCRIBED);
   };
 
   return (
