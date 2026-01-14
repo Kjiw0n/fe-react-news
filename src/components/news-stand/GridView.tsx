@@ -3,7 +3,7 @@ import { TAB_VALUES, type PressDataGridResponse } from '@/constants/type';
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
-import { fetchAllPress, fetchSubscribedPress } from '@/apis/pressApi';
+import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
 
 interface GridViewProps {
   activeTab?: string;
