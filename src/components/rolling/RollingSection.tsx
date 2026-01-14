@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import RollingItem from './RollingItem';
-import type { RollingNewsItem, RollingNewsResponse } from '@/constants/type';
+import type { RollingNewsItem } from '@/constants/type';
+import { fetchRollingNews } from '@/apis/news';
 
 type TrackKey = 'left' | 'right';
 
@@ -28,14 +29,8 @@ const RollingSection = ({
   const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
-    fetch('/api/news/rolling')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Failed to fetch rolling news');
-        }
-        return res.json();
-      })
-      .then((result: RollingNewsResponse) => {
+    fetchRollingNews()
+      .then((result) => {
         setData(result[track]);
       })
       .catch(() => {

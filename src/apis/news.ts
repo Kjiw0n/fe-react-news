@@ -9,3 +9,9 @@ export const fetchSubscribedPress = async (view: 'list' | 'grid') => {
   if (!res.ok) throw new Error('Failed to fetch subscribed press data');
   return res.json();
 };
+
+export const fetchRollingNews = async () => {
+  const res = await fetch('/api/news/rolling');
+  if (!res.ok) throw new Error('Failed to fetch rolling news');
+  return res.json();
+};
