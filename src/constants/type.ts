@@ -49,3 +49,10 @@ export interface RollingNewsData {
   left: RollingNewsItem[];
   right: RollingNewsItem[];
 }
+
+export const TAB_VALUES = {
+  LIST: 'list',
+  GRID: 'grid',
+  ALL: 'all',
+  SUBSCRIBED: 'subscribed',
+};

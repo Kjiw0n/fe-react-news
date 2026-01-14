@@ -1,12 +1,11 @@
 import { Tabs, TabsContent } from '../ui/tabs';
 import ViewLayoutSwitcher from './ViewLayoutSwitcher';
 
-import { TAB_VALUES } from '@/constants/tabs';
 import ListView from './ListView';
 import MediaSourceTab from './MediaSourceTab';
 import GridView from './GridView';
 
-import type { PressData } from '@/constants/types/type';
+import { TAB_VALUES, type PressData } from '@/constants/type';
 import { useEffect, useState, useMemo } from 'react';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 import { fetchPressData } from '@/apis/pressApi';

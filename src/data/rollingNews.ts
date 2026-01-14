@@ -1,4 +1,4 @@
-import type { RollingNewsData } from '../constants/types/type';
+import type { RollingNewsData } from '../constants/type';
 
 export const rollingNews: RollingNewsData = {
   left: [

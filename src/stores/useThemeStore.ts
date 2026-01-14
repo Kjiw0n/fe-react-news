@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ThemeState } from '@/constants/types/type';
+import { ThemeState } from '@/constants/type';
 
 interface ThemeStore {
   theme: ThemeState;

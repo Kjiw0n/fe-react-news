@@ -1,4 +1,4 @@
-import { ThemeState, type PressData } from '@/constants/types/type';
+import { ThemeState, type PressData } from '@/constants/type';
 import SubscribeButton from '../commons/SubscribeButton';
 import { useThemeStore } from '@/stores/useThemeStore';
 

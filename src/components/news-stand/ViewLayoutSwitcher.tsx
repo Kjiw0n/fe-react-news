@@ -1,5 +1,6 @@
+import { TAB_VALUES } from '@/constants/type';
 import { TabsList, TabsTrigger } from '../ui/tabs';
-import { TAB_VALUES } from '@/constants/tabs';
+
 import Icon from '@/assets/svg';
 
 const ViewLayoutSwitcher = () => {

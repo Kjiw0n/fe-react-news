@@ -1,11 +1,11 @@
 import {
   CATEGORY_LIST,
+  TAB_VALUES,
   type Category,
   type PressData,
-} from '@/constants/types/type';
+} from '@/constants/type';
 import { useEffect, useMemo, useState } from 'react';
 import SubscribeButton from '@/components/commons/SubscribeButton';
-import { TAB_VALUES } from '@/constants/tabs';
 
 interface ListViewProps {
   pressData: PressData[] | null;

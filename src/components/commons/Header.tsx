@@ -1,5 +1,5 @@
 import Icon from '@/assets/svg';
-import { ThemeState } from '@/constants/types/type';
+import { ThemeState } from '@/constants/type';
 import { useThemeStore } from '@/stores/useThemeStore';
 import { updateDate } from '@/utils/utils';
 

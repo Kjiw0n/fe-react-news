@@ -1,6 +1,6 @@
+import { TAB_VALUES } from '@/constants/type';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
-import { TAB_VALUES } from '@/constants/tabs';
 import { cn } from '@/lib/utils';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 
