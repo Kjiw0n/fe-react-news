@@ -53,11 +53,7 @@ const NewsStand = () => {
           <GridView pressData={pressData} />
         </TabsContent>
         <TabsContent value={TAB_VALUES.LIST}>
-          <ListView
-            pressData={pressData}
-            switchTab={switchTab}
-            activeTab={activeTab}
-          />
+          <ListView switchTab={switchTab} activeTab={activeTab} />
         </TabsContent>
       </Tabs>
     </div>
