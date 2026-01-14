@@ -3,3 +3,8 @@ dist
 build
 coverage
 .pnpm-store
+svg.d.ts
+vite-env.d.ts
+package.json
+pnpm-lock.yaml
+public/mockServiceWorker.js

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import RollingSection from "./RollingSection";
+import { useState } from 'react';
+import RollingSection from './RollingSection';
 
 const NewsRolling = () => {
   const [isPaused, setIsPaused] = useState(false);
@@ -11,16 +11,17 @@ const NewsRolling = () => {
         interval={5000}
         isPaused={isPaused}
         onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}/>
+        onMouseLeave={() => setIsPaused(false)}
+      />
       <RollingSection
         track="right"
         interval={5000}
         delay={1000}
         isPaused={isPaused}
         onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}/>
+        onMouseLeave={() => setIsPaused(false)}
+      />
     </div>
   );
 };
 export default NewsRolling;
-

@@ -18,14 +18,16 @@ const useSubscriptionStore = create<SubscriptionStore>()(
         })),
       unsubscribe: (pressId) =>
         set((state) => ({
-          subscribedPresses: state.subscribedPresses.filter((id) => id !== pressId),
+          subscribedPresses: state.subscribedPresses.filter(
+            (id) => id !== pressId,
+          ),
         })),
       isSubscribed: (pressId) => get().subscribedPresses.includes(pressId),
     }),
     {
       name: 'subscription-storage',
-    }
-  )
+    },
+  ),
 );
 
 export default useSubscriptionStore;

@@ -44,8 +44,8 @@ export interface RollingNewsItem {
   headline: string;
 }
 
-// Rolling News Data
-export interface RollingNewsData {
+// Rolling News Response
+export interface RollingNewsResponse {
   left: RollingNewsItem[];
   right: RollingNewsItem[];
 }
