@@ -2,7 +2,7 @@ import NewsPressItem from './NewsPressItem';
 import type { PressData } from '@/constants/type';
 import { useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
-import { shuffle } from '@/utils/utils';
+import { shuffle } from '@/lib/utils';
 
 interface GridViewProps {
   pressData: PressData[];

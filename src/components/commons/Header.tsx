@@ -1,7 +1,7 @@
 import Icon from '@/assets/svg';
 import { ThemeState } from '@/constants/type';
+import { updateDate } from '@/lib/utils';
 import { useThemeStore } from '@/stores/useThemeStore';
-import { updateDate } from '@/utils/utils';
 
 const Header = () => {
   const date = updateDate();
