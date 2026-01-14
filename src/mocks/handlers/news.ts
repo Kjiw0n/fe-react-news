@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import pressData from '@/data/pressData.json';
-import type { PressData } from '@/constants/type';
+import rollingNews from '@/data/rollingNews.json';
+import type { PressData, RollingNewsResponse } from '@/constants/type';
 
 const subscribedPressNames: string[] = ['쿠키뉴스'];
 
@@ -68,5 +69,10 @@ export const pressHandlers = [
         : groupByPress(subscribedList as PressData[]);
 
     return HttpResponse.json(responseData);
+  }),
+
+  // 롤링 뉴스 조회
+  http.get('/api/news/rolling', () => {
+    return HttpResponse.json(rollingNews as RollingNewsResponse);
   }),
 ];
