@@ -1,8 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import pressData from '@/data/pressData.json';
 import type { PressData } from '@/constants/type';
-
-const subscribedPressNames: string[] = ['쿠키뉴스'];
+import { getSubscribedNames } from './subscription';
 
 // groupedByCategory: { [category]: { [press]: PressData[] } }
 const groupByCategory = (data: PressData[]) => {
@@ -59,7 +58,7 @@ export const pressHandlers = [
     const view = url.searchParams.get('view');
 
     const subscribedList = (pressData as PressData[]).filter((p) =>
-      subscribedPressNames.includes(p.press),
+      getSubscribedNames().includes(p.press),
     );
 
     const responseData =
