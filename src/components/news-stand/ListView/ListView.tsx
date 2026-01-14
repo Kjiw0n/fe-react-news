@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import NewsContents from './NewsContents';
-import { TAB_VALUES, type PressData, type TabValue } from '@/constants/type';
+import {
+  TAB_VALUES,
+  type PressDataListResponse,
+  type TabValue,
+} from '@/constants/type';
 import ListViewTab from './ListViewTab';
 import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
 
@@ -9,12 +13,10 @@ interface ListViewProps {
   activeTab?: string;
 }
 
-export type PressResponse = Record<string, Record<string, PressData[]>>;
-
 export const ITEM_CYCLE_INTERVAL_MS = 20000;
 
 const ListView = ({ switchTab, activeTab }: ListViewProps) => {
-  const [pressListData, setPressListData] = useState<PressResponse>({});
+  const [pressListData, setPressListData] = useState<PressDataListResponse>({});
   const [categoryList, setCategoryList] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState<string>(categoryList[0]);
   const [pageIdx, setPageIdx] = useState(0);

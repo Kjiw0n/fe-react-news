@@ -1,9 +1,8 @@
 import SubscribeButton from '@/components/commons/SubscribeButton';
-import type { TabValue } from '@/constants/type';
-import type { PressResponse } from './ListView';
+import type { PressDataListResponse, TabValue } from '@/constants/type';
 
 interface NewsContentsProps {
-  pressListData: PressResponse;
+  pressListData: PressDataListResponse;
   selectedTab: string;
   pageIdx: number;
   switchTab: (tabType: TabValue) => void;

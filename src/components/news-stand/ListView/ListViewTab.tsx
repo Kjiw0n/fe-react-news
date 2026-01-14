@@ -1,5 +1,4 @@
-import { TAB_VALUES } from '@/constants/type';
-import type { PressResponse } from './ListView';
+import { TAB_VALUES, type PressDataListResponse } from '@/constants/type';
 
 const ListViewTab = ({
   category,
@@ -14,7 +13,7 @@ const ListViewTab = ({
   pageIdx: number;
   handleTabClick: (category: string) => void;
   activeTab?: string;
-  pressListData: PressResponse;
+  pressListData: PressDataListResponse;
 }) => {
   return (
     <div
