@@ -1,6 +1,4 @@
 import { http, HttpResponse } from 'msw';
-import pressData from '@/data/pressData.json';
-import type { PressData } from '@/constants/type';
 
 const STORAGE_KEY = 'subscribed-press-names';
 
@@ -15,69 +13,57 @@ export const setSubscribedNames = (names: string[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(names));
 };
 
-// // groupedByCategory: { [category]: { [press]: PressData[] } }
-// const groupByCategory = (data: PressData[]) => {
-//   const grouped: Record<string, Record<string, PressData[]>> = {};
+export const subscriptionHandlers = [
+  // 구독한 언론사 이름들 가져오기
+  http.get('/api/subscription', () => {
+    const names = getSubscribedNames();
+    return HttpResponse.json(names);
+  }),
 
-//   data.forEach((item) => {
-//     if (!grouped[item.category]) grouped[item.category] = {};
-//     if (!grouped[item.category][item.press])
-//       grouped[item.category][item.press] = [];
-//     grouped[item.category][item.press].push(item);
-//   });
+  // 구독 취소
+  http.delete('/api/subscription', async ({ request }) => {
+    const url = new URL(request.url);
+    const pressName = url.searchParams.get('pressName');
 
-//   return grouped;
-// };
+    if (!pressName) {
+      return HttpResponse.json(
+        { success: false, error: 'pressName is required' },
+        { status: 400 },
+      );
+    }
 
-// // groupedByPress: { [press]: { [press]: PressData[] } }
-// const groupByPress = (data: PressData[]) => {
-//   const grouped: Record<string, Record<string, PressData[]>> = {};
+    const currentNames = getSubscribedNames();
 
-//   data.forEach((item) => {
-//     if (!grouped[item.press]) grouped[item.press] = {};
-//     grouped[item.press][item.press] = grouped[item.press][item.press] || [];
-//     grouped[item.press][item.press].push(item);
-//   });
+    // 구독 중이 아닌 언론사인지 확인
+    if (!currentNames.includes(pressName)) {
+      return HttpResponse.json(
+        { success: false, error: '구독 중이 아닌 언론사입니다' },
+        { status: 404 },
+      );
+    }
 
-//   return grouped;
-// };
+    const updatedNames = currentNames.filter((name) => name !== pressName);
+    setSubscribedNames(updatedNames);
+    return HttpResponse.json({ success: true });
+  }),
 
-// // grid용 데이터 가공
-// const mapToGridView = (data: PressData[]) => {
-//   return data.map(({ logo, press }) => ({
-//     logo,
-//     press,
-//   }));
-// };
+  // 구독 추가
+  http.post('/api/subscription', async ({ request }) => {
+    const url = new URL(request.url);
+    const pressName = url.searchParams.get('pressName');
 
-// export const subscriptionHandlers = [
-//   // 전체 언론사 조회
-//   http.get('/api/press/all', ({ request }) => {
-//     const url = new URL(request.url);
-//     const view = url.searchParams.get('view');
+    if (!pressName) {
+      return HttpResponse.json(
+        { success: false, error: 'pressName is required' },
+        { status: 400 },
+      );
+    }
 
-//     const responseData =
-//       view === 'grid'
-//         ? mapToGridView(pressData as PressData[])
-//         : groupByCategory(pressData as PressData[]);
-
-//     return HttpResponse.json(responseData);
-//   }),
-
-//   // 구독한 언론사 조회
-//   http.get('/api/press/subscribed', ({ request }) => {
-//     const url = new URL(request.url);
-//     const view = url.searchParams.get('view');
-
-//     const subscribedList = (pressData as PressData[]).filter((p) =>
-//       subscribedPressNames.includes(p.press),
-//     );
-
-//     const responseData =
-//       view === 'grid'
-//         ? mapToGridView(subscribedList as PressData[])
-//         : groupByPress(subscribedList as PressData[]);
-
-//     return HttpResponse.json(responseData);
-//   }),
-// ];
+    const currentNames = getSubscribedNames();
+    if (!currentNames.includes(pressName)) {
+      currentNames.push(pressName);
+      setSubscribedNames(currentNames);
+    }
+    return HttpResponse.json({ success: true });
+  }),
+];
