@@ -54,7 +54,7 @@ const NewsStand = () => {
         </TabsContent>
         <TabsContent value={TAB_VALUES.LIST}>
           <ListView
-            pressData={pressData}
+            // pressData={pressData}
             switchTab={switchTab}
             activeTab={activeTab}
           />

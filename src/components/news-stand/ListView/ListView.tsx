@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import NewsContents from './NewsContents';
 import { TAB_VALUES, type PressData, type TabValue } from '@/constants/type';
 import ListViewTab from './ListViewTab';
-import { fetchAllPress, fetchSubscribedPress } from '@/apis/pressApi';
+import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
 
 interface ListViewProps {
   switchTab: (tabType: TabValue) => void;
