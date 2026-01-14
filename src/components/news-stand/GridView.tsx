@@ -1,21 +1,37 @@
 import NewsPressItem from './NewsPressItem';
-import type { PressData } from '@/constants/type';
-import { useMemo, useState } from 'react';
+import { TAB_VALUES, type PressDataGridResponse } from '@/constants/type';
+import { useEffect, useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
+import { fetchAllPress, fetchSubscribedPress } from '@/apis/pressApi';
 
 interface GridViewProps {
-  pressData: PressData[];
+  activeTab?: string;
 }
 
-const GridView = ({ pressData }: GridViewProps) => {
+const GridView = ({ activeTab }: GridViewProps) => {
+  const [pressListData, setPressListData] = useState<PressDataGridResponse[]>(
+    [],
+  );
+
   const [pageIdx, setPageIdx] = useState(0);
+
+  useEffect(() => {
+    const loadPressData = async () => {
+      const data =
+        activeTab === TAB_VALUES.ALL
+          ? await fetchAllPress('grid')
+          : await fetchSubscribedPress('grid');
+      setPressListData(data);
+    };
+    loadPressData();
+  }, [activeTab]);
 
   // 전체 데이터에서 96개를 무작위로 추출 (새로고침 시에만 실행됨)
   const selectedData = useMemo(() => {
-    const shuffled = shuffle(pressData);
+    const shuffled = shuffle(pressListData);
     return shuffled.slice(0, 96);
-  }, [pressData]);
+  }, [pressListData]);
 
   // 현재 페이지의 데이터 가져오기
   const currentPageData = selectedData.slice(pageIdx * 24, (pageIdx + 1) * 24);
@@ -29,7 +45,10 @@ const GridView = ({ pressData }: GridViewProps) => {
   return (
     <div className="border-border-default relative grid grid-cols-6 border-t border-l">
       {gridItems.map((item, index) => (
-        <NewsPressItem key={item?.press || `empty-${index}`} pressData={item} />
+        <NewsPressItem
+          key={item?.press || `empty-${index}`}
+          pressListData={item}
+        />
       ))}
       {pageIdx > 0 && (
         <Icon.ArrowLeft
