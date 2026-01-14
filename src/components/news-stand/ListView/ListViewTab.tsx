@@ -1,4 +1,5 @@
-import { TAB_VALUES, type PressData } from '@/constants/type';
+import { TAB_VALUES } from '@/constants/type';
+import type { PressResponse } from './ListView';
 
 const ListViewTab = ({
   category,
@@ -6,14 +7,14 @@ const ListViewTab = ({
   pageIdx,
   handleTabClick,
   activeTab,
-  groupedData,
+  pressListData,
 }: {
   category: string;
   selectedTab: string;
   pageIdx: number;
   handleTabClick: (category: string) => void;
   activeTab?: string;
-  groupedData: Record<string, PressData[]>;
+  pressListData: PressResponse;
 }) => {
   return (
     <div
@@ -25,21 +26,17 @@ const ListViewTab = ({
       onClick={() => handleTabClick(category)}
     >
       <span>{category}</span>
-      {selectedTab === category && (
-        <>
-          {activeTab === TAB_VALUES.ALL ? (
-            <PageIndicator
-              pageIdx={pageIdx}
-              groupedData={groupedData}
-              category={category}
-            />
-          ) : (
-            <span className="text-white-default mb-0.5 flex w-3.5 flex-row items-center">
-              {'>'}
-            </span>
-          )}
-        </>
-      )}
+      {selectedTab === category &&
+        (activeTab === TAB_VALUES.ALL ? (
+          <PageIndicator
+            pageIdx={pageIdx}
+            total={Object.keys(pressListData[category] || {}).length}
+          />
+        ) : (
+          <span className="text-white-default mb-0.5 flex w-3.5 items-center">
+            {'>'}
+          </span>
+        ))}
     </div>
   );
 };
@@ -48,18 +45,16 @@ export default ListViewTab;
 
 const PageIndicator = ({
   pageIdx,
-  groupedData,
-  category,
+  total,
 }: {
   pageIdx: number;
-  groupedData: Record<string, PressData[]>;
-  category: string;
+  total: number;
 }) => {
   return (
     <div className="display-bold12 text-white-weak flex flex-row items-center gap-1">
       <span className="text-white-default">{pageIdx + 1}</span>
       <span>/</span>
-      <span>{groupedData[category].length}</span>
+      <span>{total}</span>
     </div>
   );
 };
