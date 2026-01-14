@@ -38,6 +38,14 @@ export interface PressData {
   relatedArticles: RelatedArticle[];
 }
 
+export type PressDataGridResponse = {
+  logo: string;
+  darkLogo: string;
+  press: string;
+};
+
+export type PressDataListResponse = Record<string, Record<string, PressData[]>>;
+
 // Rolling News Item
 export interface RollingNewsItem {
   provider: string;
