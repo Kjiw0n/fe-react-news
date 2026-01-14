@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-const STORAGE_KEY = 'subscribed-press-names';
+const STORAGE_KEY = 'subscription-storage';
 
 // 로컬스토리지에서 구독 목록 가져오는 헬퍼 함수
 export const getSubscribedNames = (): string[] => {
