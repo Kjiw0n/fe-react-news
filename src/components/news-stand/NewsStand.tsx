@@ -9,6 +9,7 @@ import GridView from './GridView';
 import type { PressData } from '@/constants/types/type';
 import { useEffect, useState, useMemo } from 'react';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
+import { fetchPressData } from '@/apis/pressApi';
 
 const NewsStand = () => {
   const [allPressData, setAllPressData] = useState<PressData[]>([]);
@@ -16,17 +17,16 @@ const NewsStand = () => {
   const { subscribedPresses } = useSubscriptionStore();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
-        const res = await fetch('/api/press-data');
-        const data = await res.json();
+        const data = await fetchPressData();
         setAllPressData(data);
       } catch (error) {
         console.error('Fetch error:', error);
       }
     };
 
-    fetchData();
+    loadData();
   }, []);
 
   const pressData = useMemo(
