@@ -5,38 +5,11 @@ import ListView from './ListView/ListView';
 import MediaSourceTab from './MediaSourceTab';
 import GridView from './GridView';
 
-import { TAB_VALUES, type PressData, type TabValue } from '@/constants/type';
-import { useEffect, useState, useMemo } from 'react';
-import useSubscriptionStore from '@/stores/useSubscriptionStore';
-import { fetchPressData } from '@/apis/pressApi';
+import { TAB_VALUES, type TabValue } from '@/constants/type';
+import { useState } from 'react';
 
 const NewsStand = () => {
-  const [allPressData, setAllPressData] = useState<PressData[]>([]);
   const [activeTab, setActiveTab] = useState<TabValue>(TAB_VALUES.ALL);
-  const { subscribedPresses } = useSubscriptionStore();
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const data = await fetchPressData();
-        setAllPressData(data);
-      } catch (error) {
-        console.error('Fetch error:', error);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  const pressData = useMemo(
-    () =>
-      activeTab === TAB_VALUES.SUBSCRIBED && allPressData
-        ? allPressData.filter((press) =>
-            subscribedPresses.includes(press.press),
-          )
-        : allPressData,
-    [activeTab, allPressData, subscribedPresses],
-  );
 
   const switchTab = (tabType: TabValue) => {
     setActiveTab(tabType);
@@ -50,7 +23,7 @@ const NewsStand = () => {
           <ViewLayoutSwitcher />
         </div>
         <TabsContent value={TAB_VALUES.GRID}>
-          <GridView pressData={pressData} />
+          <GridView activeTab={activeTab} />
         </TabsContent>
         <TabsContent value={TAB_VALUES.LIST}>
           <ListView switchTab={switchTab} activeTab={activeTab} />
