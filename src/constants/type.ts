@@ -56,3 +56,5 @@ export const TAB_VALUES = {
   ALL: 'all',
   SUBSCRIBED: 'subscribed',
 };
+
+export type TabValue = (typeof TAB_VALUES)[keyof typeof TAB_VALUES];

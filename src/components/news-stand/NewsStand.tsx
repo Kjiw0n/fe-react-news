@@ -1,18 +1,18 @@
 import { Tabs, TabsContent } from '../ui/tabs';
 import ViewLayoutSwitcher from './ViewLayoutSwitcher';
 
-import ListView from './ListView';
+import ListView from './ListView/ListView';
 import MediaSourceTab from './MediaSourceTab';
 import GridView from './GridView';
 
-import { TAB_VALUES, type PressData } from '@/constants/type';
+import { TAB_VALUES, type PressData, type TabValue } from '@/constants/type';
 import { useEffect, useState, useMemo } from 'react';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 import { fetchPressData } from '@/apis/pressApi';
 
 const NewsStand = () => {
   const [allPressData, setAllPressData] = useState<PressData[]>([]);
-  const [activeTab, setActiveTab] = useState(TAB_VALUES.ALL);
+  const [activeTab, setActiveTab] = useState<TabValue>(TAB_VALUES.ALL);
   const { subscribedPresses } = useSubscriptionStore();
 
   useEffect(() => {
@@ -38,8 +38,8 @@ const NewsStand = () => {
     [activeTab, allPressData, subscribedPresses],
   );
 
-  const switchToSubscribedTab = () => {
-    setActiveTab(TAB_VALUES.SUBSCRIBED);
+  const switchTab = (tabType: TabValue) => {
+    setActiveTab(tabType);
   };
 
   return (
@@ -55,7 +55,7 @@ const NewsStand = () => {
         <TabsContent value={TAB_VALUES.LIST}>
           <ListView
             pressData={pressData}
-            switchToSubscribedTab={switchToSubscribedTab}
+            switchTab={switchTab}
             activeTab={activeTab}
           />
         </TabsContent>
