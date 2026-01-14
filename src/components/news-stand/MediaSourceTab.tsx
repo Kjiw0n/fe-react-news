@@ -11,6 +11,10 @@ interface MediaSourceTabProps {
 
 const MediaSourceTab = ({ activeTab, setActiveTab }: MediaSourceTabProps) => {
   const { subscribedPresses } = useSubscriptionStore();
+
+  if (subscribedPresses.length === 0) {
+    setActiveTab(TAB_VALUES.ALL);
+  }
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="gap-6">
