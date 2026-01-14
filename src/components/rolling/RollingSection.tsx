@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import RollingItem from './RollingItem';
-import { rollingNews } from '@/data/rollingNews';
+import type { RollingNewsItem, RollingNewsResponse } from '@/constants/type';
 
 type TrackKey = 'left' | 'right';
+
 interface RollingSectionProps {
   track: TrackKey;
   interval?: number;
@@ -22,12 +23,29 @@ const RollingSection = ({
   onMouseEnter,
   onMouseLeave,
 }: RollingSectionProps) => {
-  const data = rollingNews[track];
+  const [data, setData] = useState<RollingNewsItem[]>([]);
   const [index, setIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
+    fetch('/api/news/rolling')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch rolling news');
+        }
+        return res.json();
+      })
+      .then((result: RollingNewsResponse) => {
+        setData(result[track]);
+      })
+      .catch(() => {
+        setData([]);
+      });
+  }, [track]);
+
+  useEffect(() => {
     if (isPaused) return;
+    if (data.length === 0) return;
 
     const startRolling = () => {
       setIsMoving(true);
@@ -48,6 +66,8 @@ const RollingSection = ({
       if (timer) clearInterval(timer);
     };
   }, [data.length, interval, isPaused, delay]);
+
+  if (data.length === 0) return null;
 
   const current = data[index];
   const next = data[(index + 1) % data.length];
@@ -71,4 +91,5 @@ const RollingSection = ({
     </div>
   );
 };
+
 export default RollingSection;
