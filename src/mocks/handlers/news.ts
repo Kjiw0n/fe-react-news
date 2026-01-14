@@ -4,7 +4,6 @@ import rollingNews from '@/data/rollingNews.json';
 import type { PressData, RollingNewsResponse } from '@/constants/type';
 import { getSubscribedNames } from './subscription';
 
-
 // groupedByCategory: { [category]: { [press]: PressData[] } }
 const groupByCategory = (data: PressData[]) => {
   const grouped: Record<string, Record<string, PressData[]>> = {};
@@ -34,8 +33,9 @@ const groupByPress = (data: PressData[]) => {
 
 // grid용 데이터 가공
 const mapToGridView = (data: PressData[]) => {
-  return data.map(({ logo, press }) => ({
+  return data.map(({ logo, darkLogo, press }) => ({
     logo,
+    darkLogo,
     press,
   }));
 };
