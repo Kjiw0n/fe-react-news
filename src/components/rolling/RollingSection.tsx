@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import RollingItem from './RollingItem';
-import type { RollingNewsItem } from '@/constants/type';
 import { fetchRollingNews } from '@/apis/news';
-// import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type TrackKey = 'left' | 'right';
 
@@ -25,24 +24,15 @@ const RollingSection = ({
   onMouseEnter,
   onMouseLeave,
 }: RollingSectionProps) => {
-  const [data, setData] = useState<RollingNewsItem[]>([]);
   const [index, setIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
-  // const { data }: { data: RollingNewsItem[] } = useSuspenseQuery({
-  //   queryKey: ['rollingNews', track],
-  //   queryFn: fetchRollingNews,
-  // });
+  const { data: rollingNews } = useSuspenseQuery({
+    queryKey: ['rollingNews'],
+    queryFn: fetchRollingNews,
+  });
 
-  useEffect(() => {
-    fetchRollingNews()
-      .then((result) => {
-        setData(result[track]);
-      })
-      .catch(() => {
-        setData([]);
-      });
-  }, [track]);
+  const data = rollingNews[track];
 
   useEffect(() => {
     if (isPaused) return;
