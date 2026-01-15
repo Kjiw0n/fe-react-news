@@ -69,6 +69,25 @@ const validateViewParameter = (
   return { isValid: true, view };
 };
 
+// list view 전용: grouped 데이터에 전역 index 추가
+const addGlobalIndex = (
+  grouped: Record<string, Record<string, PressData[]>>,
+) => {
+  let index = 0;
+
+  return Object.fromEntries(
+    Object.entries(grouped).map(([groupKey, presses]) => [
+      groupKey,
+      Object.fromEntries(
+        Object.entries(presses).map(([press, items]) => [
+          press,
+          items.map((item) => ({ ...item, index: index++ })),
+        ]),
+      ),
+    ]),
+  );
+};
+
 export const pressHandlers = [
   // 전체 언론사 조회
   http.get('/api/press/all', ({ request }) => {
@@ -83,7 +102,7 @@ export const pressHandlers = [
     const responseData =
       validation.view === 'grid'
         ? mapToGridView(pressData as PressData[])
-        : groupByCategory(pressData as PressData[]);
+        : addGlobalIndex(groupByCategory(pressData as PressData[]));
 
     return HttpResponse.json(responseData);
   }),
