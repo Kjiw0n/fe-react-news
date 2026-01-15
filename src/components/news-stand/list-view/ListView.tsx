@@ -71,7 +71,7 @@ const ListView = ({ switchTab, activeTab }: ListViewProps) => {
       <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start overflow-x-auto border whitespace-nowrap">
         {categoryList.map((category) => (
           <ListViewTab
-            key={category}
+            key={category + pageIdx}
             category={category}
             selectedTab={selectedTab}
             pageIdx={pageIdx}
