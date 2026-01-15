@@ -4,8 +4,30 @@ const STORAGE_KEY = 'subscription-storage';
 
 // 로컬스토리지에서 구독 목록 가져오는 헬퍼 함수
 export const getSubscribedNames = (): string[] => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : ['쿠키뉴스']; // 초기값
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return ['쿠키뉴스']; // 초기값
+
+    const parsed = JSON.parse(saved);
+
+    // 배열인지 확인
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+
+    // zustand 스토어 형태 체크 (state.subscriptions 같은 형태)
+    if (
+      parsed?.state?.subscriptions &&
+      Array.isArray(parsed.state.subscriptions)
+    ) {
+      return parsed.state.subscriptions;
+    }
+
+    return ['쿠키뉴스']; // 예상하지 못한 형태면 초기값 반환
+  } catch (error) {
+    console.error('Failed to parse subscribed names:', error);
+    return ['쿠키뉴스']; // 파싱 실패 시 초기값
+  }
 };
 
 // 로컬스토리지에 구독 목록 저장하는 헬퍼 함수

@@ -1,9 +1,9 @@
-import NewsPressItem from './NewsPressItem';
 import { TAB_VALUES, type PressDataGridResponse } from '@/constants/type';
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
 import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
+import NewsPressItem from './NewsPressItem';
 
 interface GridViewProps {
   activeTab?: string;
