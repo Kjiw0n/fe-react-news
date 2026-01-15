@@ -29,6 +29,7 @@ const NewsContents = ({
         <SubscribeButton
           pressName={currentPressData.press}
           switchTab={switchTab}
+          variant='icon'
         />
       </div>
 
