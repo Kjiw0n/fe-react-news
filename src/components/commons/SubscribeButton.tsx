@@ -16,7 +16,11 @@ interface SubscribeButtonProps {
   variant?: 'text' | 'icon';
 }
 
-const SubscribeButton = ({ pressName, switchTab, variant = 'text' }: SubscribeButtonProps) => {
+const SubscribeButton = ({
+  pressName,
+  switchTab,
+  variant = 'text',
+}: SubscribeButtonProps) => {
   const [showAlert, setShowAlert] = useState(false);
   const queryClient = useQueryClient();
   const { data: subscribedPresses = [] } = useSuspenseQuery({
@@ -48,7 +52,11 @@ const SubscribeButton = ({ pressName, switchTab, variant = 'text' }: SubscribeBu
   return (
     <>
       <Button size="sm" className="cursor-pointer" onClick={handleClick}>
-        {!subscribedPresses.includes(pressName) ? '+ 구독하기' : variant === 'icon' ? '× ' : '× 해지하기'}
+        {!subscribedPresses.includes(pressName)
+          ? '+ 구독하기'
+          : variant === 'icon'
+            ? '× '
+            : '× 해지하기'}
       </Button>
       {showAlert && (
         <SubscribeAlert

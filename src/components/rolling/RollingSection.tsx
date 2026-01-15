@@ -60,7 +60,9 @@ const RollingSection = ({
       <div
         className="will-change-transform"
         style={{
-          transform: isMoving ? `translateY(-${ITEM_HEIGHT}px)` : 'translateY(0px)',
+          transform: isMoving
+            ? `translateY(-${ITEM_HEIGHT}px)`
+            : 'translateY(0px)',
           transition: isMoving ? `transform ${DURATION}ms ease-in-out` : 'none',
         }}
       >

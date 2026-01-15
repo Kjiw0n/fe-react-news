@@ -22,7 +22,7 @@ const NewsRolling = () => {
         }
       >
         <RollingSection
-          data={rollingNews.left} 
+          data={rollingNews.left}
           interval={5000}
           isPaused={isPaused}
           onMouseEnter={() => setIsPaused(true)}
