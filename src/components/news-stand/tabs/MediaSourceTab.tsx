@@ -1,8 +1,7 @@
 import { TAB_VALUES } from '@/constants/type';
 
 import { cn } from '@/lib/utils';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { getSubscribedPresses } from '@/apis/subscription';
+import { useSubscribedPresses } from '@/apis/subscription';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Suspense, useEffect } from 'react';
 
@@ -33,13 +32,7 @@ interface SubscribedPressesTabItemProps {
 const SubscribedPressesTabItem = ({
   onValueChange,
 }: SubscribedPressesTabItemProps) => {
-  const { data: subscribedPresses = [] } = useSuspenseQuery({
-    queryKey: ['subscribedPresses'],
-    queryFn: async () => {
-      const presses = await getSubscribedPresses();
-      return presses;
-    },
-  });
+  const { data: subscribedPresses = [] } = useSubscribedPresses();
 
   useEffect(() => {
     if (subscribedPresses.length === 0) {

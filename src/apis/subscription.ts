@@ -15,8 +15,8 @@ export const useSubscribePressMutation = () => {
 
   return useMutation({
     mutationFn: subscribePress,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      return await queryClient.invalidateQueries({
         queryKey: ['subscribedPresses'],
       });
     },

@@ -24,16 +24,14 @@ const SubscribeButton = ({
 
   const subscribeMutation = useSubscribePressMutation();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (subscribedPresses.includes(pressName)) {
       setShowAlert(true);
       return;
     }
-    subscribeMutation.mutate(pressName, {
-      onSuccess: () => {
-        switchTab?.(TAB_VALUES.SUBSCRIBED);
-      },
-    });
+    await subscribeMutation.mutateAsync(pressName);
+
+    switchTab?.(TAB_VALUES.SUBSCRIBED);
   };
 
   return (
