@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getSubscribedPresses } from '@/apis/subscription';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 interface MediaSourceTabProps {
   activeTab: string;
@@ -40,9 +40,13 @@ const SubscribedPressesTabItem = ({
       return presses;
     },
   });
-  if (subscribedPresses.length === 0) {
-    onValueChange(TAB_VALUES.ALL);
-  }
+
+  useEffect(() => {
+    if (subscribedPresses.length === 0) {
+      onValueChange(TAB_VALUES.ALL);
+    }
+  }, [subscribedPresses, onValueChange]);
+
   return (
     <TabsTrigger
       className="cursor-pointer"
