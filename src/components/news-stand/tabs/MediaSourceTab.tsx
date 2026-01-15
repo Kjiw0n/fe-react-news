@@ -1,11 +1,11 @@
 import { TAB_VALUES } from '@/constants/type';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
 import { cn } from '@/lib/utils';
 import useSubscriptionStore from '@/stores/useSubscriptionStore';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { getSubscribedPresses } from '@/apis/subscription';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface MediaSourceTabProps {
   activeTab: string;
