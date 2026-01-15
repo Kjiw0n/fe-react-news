@@ -1,12 +1,12 @@
 import { Tabs, TabsContent } from '../ui/tabs';
 import ViewLayoutSwitcher from './ViewLayoutSwitcher';
 
-import ListView from './ListView/ListView';
 import MediaSourceTab from './MediaSourceTab';
-import GridView from './GridView';
 
 import { TAB_VALUES, type TabValue } from '@/constants/type';
 import { useState } from 'react';
+import GridView from './grid-view/GridView';
+import ListView from './list-view/ListView';
 
 const NewsStand = () => {
   const [activeTab, setActiveTab] = useState<TabValue>(TAB_VALUES.ALL);
