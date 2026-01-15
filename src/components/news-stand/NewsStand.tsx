@@ -20,8 +20,9 @@ const NewsStand = () => {
         <div className="flex justify-between">
           <Suspense
             fallback={
-              <div className="flex h-fit flex-col gap-4 px-8 py-6 text-lg">
-                <Skeleton className="h-20 w-full rounded-lg bg-slate-900" />
+              <div className="flex h-fit gap-6">
+                <Skeleton className="h-4 w-18.25" />
+                <Skeleton className="h-4 w-29.75" />
               </div>
             }
           >
