@@ -1,6 +1,5 @@
 import SubscribeButton from '@/components/commons/SubscribeButton';
 import { ThemeState, type PressDataGridResponse } from '@/constants/type';
-
 import { useThemeStore } from '@/stores/useThemeStore';
 
 interface NewsPressItemProps {

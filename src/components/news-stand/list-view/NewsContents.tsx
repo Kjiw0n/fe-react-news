@@ -1,5 +1,6 @@
 import SubscribeButton from '@/components/commons/SubscribeButton';
-import type { PressDataListResponse, TabValue } from '@/constants/type';
+import { type PressDataListResponse, type TabValue, ThemeState } from '@/constants/type';
+import { useThemeStore } from '@/stores/useThemeStore';
 
 interface NewsContentsProps {
   pressListData: PressDataListResponse;
@@ -14,15 +15,22 @@ const NewsContents = ({
   pageIdx,
   switchTab,
 }: NewsContentsProps) => {
+  const { theme } = useThemeStore();
+
   const currentPressData =
     pressListData[selectedTab] &&
     Object.values(pressListData[selectedTab])[pageIdx]?.[0];
   if (!currentPressData) return null;
 
+  const logoSrc =
+    theme === ThemeState.DARK && currentPressData.darkLogo
+      ? currentPressData.darkLogo
+      : currentPressData.logo;
+
   return (
     <div className="border-border-default -mt-px flex flex-col gap-4 border p-6">
       <div className="flex flex-row items-center justify-start gap-4">
-        <img className="h-5 w-13" src={currentPressData.logo} alt="news logo" />
+        <img className="h-5 w-13" src={logoSrc} alt="news logo" />
         <span className="display-medium12 text-default">
           {currentPressData.time}
         </span>

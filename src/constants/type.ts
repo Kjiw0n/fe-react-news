@@ -25,6 +25,7 @@ export interface RelatedArticle {
 
 // Press Data Type
 export interface PressData {
+  index: number;
   category: Category;
   currentPage: string;
   totalPage: string;
