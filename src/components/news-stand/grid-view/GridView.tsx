@@ -13,7 +13,10 @@ const GridView = ({ activeTab }: GridViewProps) => {
   const [pageIdx, setPageIdx] = useState(0);
 
   const { data: allPressData } = usePressAllQuery('grid');
-  const { data: subscribedPressData } = usePressSubscribedQuery('grid');
+  const { data: subscribedPressData } = usePressSubscribedQuery(
+    'grid',
+    activeTab,
+  );
 
   const selectedData = useMemo(() => {
     if (activeTab === TAB_VALUES.ALL) {
