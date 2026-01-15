@@ -1,10 +1,9 @@
-import { TAB_VALUES, type PressDataGridResponse } from '@/constants/type';
+import { TAB_VALUES } from '@/constants/type';
 import { useEffect, useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
-import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
+import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
 import NewsPressItem from './NewsPressItem';
-import { useQuery } from '@tanstack/react-query';
 
 interface GridViewProps {
   activeTab?: string;
@@ -12,21 +11,6 @@ interface GridViewProps {
 
 const GridView = ({ activeTab }: GridViewProps) => {
   const [pageIdx, setPageIdx] = useState(0);
-
-  const usePressAllQuery = (view: 'list' | 'grid') =>
-    useQuery<PressDataGridResponse[]>({
-      queryKey: ['press', 'all', view],
-      queryFn: () => fetchAllPress(view),
-      staleTime: 1000 * 60 * 5,
-    });
-
-  const usePressSubscribedQuery = (view: 'list' | 'grid') =>
-    useQuery<PressDataGridResponse[]>({
-      queryKey: ['subscribedPresses', 'press', view],
-      queryFn: () => fetchSubscribedPress(view),
-      staleTime: 1000 * 60 * 5,
-      enabled: activeTab !== TAB_VALUES.ALL,
-    });
 
   const { data: allPressData } = usePressAllQuery('grid');
   const { data: subscribedPressData } = usePressSubscribedQuery('grid');
@@ -42,6 +26,7 @@ const GridView = ({ activeTab }: GridViewProps) => {
   }, [activeTab, allPressData, subscribedPressData]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPageIdx(0);
   }, [activeTab]);
 
