@@ -1,9 +1,16 @@
 import { Suspense, useState } from 'react';
 import RollingSection from './RollingSection';
 import { Skeleton } from '../ui/skeleton';
+import { fetchRollingNews } from '@/apis/news';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 const NewsRolling = () => {
   const [isPaused, setIsPaused] = useState(false);
+
+  const { data: rollingNews } = useSuspenseQuery({
+    queryKey: ['rollingNews'],
+    queryFn: fetchRollingNews,
+  });
 
   return (
     <div className="mb-8 flex w-full gap-2.5">
@@ -15,7 +22,7 @@ const NewsRolling = () => {
         }
       >
         <RollingSection
-          track="left"
+          data={rollingNews.left} 
           interval={5000}
           isPaused={isPaused}
           onMouseEnter={() => setIsPaused(true)}
@@ -30,7 +37,7 @@ const NewsRolling = () => {
         }
       >
         <RollingSection
-          track="right"
+          data={rollingNews.right}
           interval={5000}
           delay={1000}
           isPaused={isPaused}

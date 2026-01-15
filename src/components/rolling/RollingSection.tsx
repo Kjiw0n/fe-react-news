@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import RollingItem from './RollingItem';
-import { fetchRollingNews } from '@/apis/news';
-import { useSuspenseQuery } from '@tanstack/react-query';
-
-type TrackKey = 'left' | 'right';
+import type { RollingNewsItem } from '@/constants/type';
 
 interface RollingSectionProps {
-  track: TrackKey;
+  data: RollingNewsItem[];
   interval?: number;
   delay?: number;
   isPaused: boolean;
@@ -15,9 +12,10 @@ interface RollingSectionProps {
 }
 
 const DURATION = 500;
+const ITEM_HEIGHT = 48;
 
 const RollingSection = ({
-  track,
+  data,
   interval = 5000,
   delay = 0,
   isPaused,
@@ -26,13 +24,6 @@ const RollingSection = ({
 }: RollingSectionProps) => {
   const [index, setIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
-
-  const { data: rollingNews } = useSuspenseQuery({
-    queryKey: ['rollingNews'],
-    queryFn: fetchRollingNews,
-  });
-
-  const data = rollingNews[track];
 
   useEffect(() => {
     if (isPaused) return;
@@ -56,7 +47,7 @@ const RollingSection = ({
       clearTimeout(initialTimeout);
       if (timer) clearInterval(timer);
     };
-  }, [data.length, interval, isPaused, delay]);
+  }, [data, interval, isPaused, delay]);
 
   if (data.length === 0) return null;
 
@@ -72,7 +63,7 @@ const RollingSection = ({
       <div
         className="will-change-transform"
         style={{
-          transform: isMoving ? `translateY(-48px)` : 'translateY(0px)',
+          transform: isMoving ? `translateY(-${ITEM_HEIGHT}px)` : 'translateY(0px)',
           transition: isMoving ? `transform ${DURATION}ms ease-in-out` : 'none',
         }}
       >
