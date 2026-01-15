@@ -9,17 +9,17 @@ import { getSubscribedPresses } from '@/apis/subscription';
 
 interface MediaSourceTabProps {
   activeTab: string;
-  setActiveTab: (tab: string) => void;
+  onValueChange: (tab: string) => void;
 }
 
-const MediaSourceTab = ({ activeTab, setActiveTab }: MediaSourceTabProps) => {
+const MediaSourceTab = ({ activeTab, onValueChange }: MediaSourceTabProps) => {
   const { subscribedPresses } = useSubscriptionStore();
 
   if (subscribedPresses.length === 0) {
-    setActiveTab(TAB_VALUES.ALL);
+    onValueChange(TAB_VALUES.ALL);
   }
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab}>
+    <Tabs value={activeTab} onValueChange={onValueChange}>
       <TabsList className="gap-6">
         <TabsTrigger className="cursor-pointer" value={TAB_VALUES.ALL}>
           전체 언론사
@@ -42,11 +42,6 @@ const MediaSourceTab = ({ activeTab, setActiveTab }: MediaSourceTabProps) => {
     </Tabs>
   );
 };
-
-interface MediaSourceTabProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-}
 
 const SubscriptionCount = () => {
   const { subscribedPresses, setSubscribedPresses } = useSubscriptionStore();
