@@ -4,34 +4,46 @@ import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
 import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
 import NewsPressItem from './NewsPressItem';
+import { useQuery } from '@tanstack/react-query';
 
 interface GridViewProps {
   activeTab?: string;
 }
 
 const GridView = ({ activeTab }: GridViewProps) => {
-  const [pressListData, setPressListData] = useState<PressDataGridResponse[]>(
-    [],
-  );
-
   const [pageIdx, setPageIdx] = useState(0);
 
-  useEffect(() => {
-    const loadPressData = async () => {
-      const data =
-        activeTab === TAB_VALUES.ALL
-          ? await fetchAllPress('grid')
-          : await fetchSubscribedPress('grid');
-      setPressListData(data);
-    };
-    loadPressData();
-  }, [activeTab]);
+  const usePressAllQuery = (view: 'list' | 'grid') =>
+    useQuery<PressDataGridResponse[]>({
+      queryKey: ['press', 'all', view],
+      queryFn: () => fetchAllPress(view),
+      staleTime: 1000 * 60 * 5,
+    });
 
-  // 전체 데이터에서 96개를 무작위로 추출 (새로고침 시에만 실행됨)
+  const usePressSubscribedQuery = (view: 'list' | 'grid') =>
+    useQuery<PressDataGridResponse[]>({
+      queryKey: ['subscribedPresses', 'press', view],
+      queryFn: () => fetchSubscribedPress(view),
+      staleTime: 1000 * 60 * 5,
+      enabled: activeTab !== TAB_VALUES.ALL,
+    });
+
+  const { data: allPressData } = usePressAllQuery('grid');
+  const { data: subscribedPressData } = usePressSubscribedQuery('grid');
+
   const selectedData = useMemo(() => {
-    const shuffled = shuffle(pressListData);
-    return shuffled.slice(0, 96);
-  }, [pressListData]);
+    if (activeTab === TAB_VALUES.ALL) {
+      // 전체 데이터에서 96개를 무작위로 추출 (새로 고침 시에만 실행됨)
+      if (!allPressData) return [];
+      return shuffle(allPressData).slice(0, 96);
+    } else {
+      return subscribedPressData ?? [];
+    }
+  }, [activeTab, allPressData, subscribedPressData]);
+
+  useEffect(() => {
+    setPageIdx(0);
+  }, [activeTab]);
 
   // 현재 페이지의 데이터 가져오기
   const currentPageData = selectedData.slice(pageIdx * 24, (pageIdx + 1) * 24);
