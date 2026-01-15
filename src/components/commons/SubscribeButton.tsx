@@ -4,8 +4,11 @@ import SubscribeAlert from '@/components/commons/SubscribeAlert';
 
 import { TAB_VALUES, type TabValue } from '@/constants/type';
 import { getSubscribedPresses, subscribePress } from '@/apis/subscription';
-import { useSuspenseQuery } from 'node_modules/@tanstack/react-query/build/modern/useSuspenseQuery';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 
 interface SubscribeButtonProps {
   pressName: string;
