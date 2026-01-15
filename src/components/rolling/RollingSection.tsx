@@ -26,8 +26,7 @@ const RollingSection = ({
   const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
-    if (isPaused) return;
-    if (data.length === 0) return;
+    if (isPaused || data.length === 0) return;
 
     const startRolling = () => {
       setIsMoving(true);
@@ -48,8 +47,6 @@ const RollingSection = ({
       if (timer) clearInterval(timer);
     };
   }, [data, interval, isPaused, delay]);
-
-  if (data.length === 0) return null;
 
   const current = data[index];
   const next = data[(index + 1) % data.length];
