@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import SubscribeAlert from '@/components/commons/SubscribeAlert';
-import useSubscriptionStore from '@/stores/useSubscriptionStore';
+
 import { TAB_VALUES, type TabValue } from '@/constants/type';
+import { getSubscribedPresses, subscribePress } from '@/apis/subscription';
+import { useSuspenseQuery } from 'node_modules/@tanstack/react-query/build/modern/useSuspenseQuery';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface SubscribeButtonProps {
   pressName: string;
@@ -10,22 +13,38 @@ interface SubscribeButtonProps {
 }
 
 const SubscribeButton = ({ pressName, switchTab }: SubscribeButtonProps) => {
-  const { isSubscribed, subscribe } = useSubscriptionStore();
   const [showAlert, setShowAlert] = useState(false);
+  const queryClient = useQueryClient();
+  const { data: subscribedPresses = [] } = useSuspenseQuery({
+    queryKey: ['subscribedPresses'],
+    queryFn: async () => {
+      const presses = await getSubscribedPresses();
+      return presses;
+    },
+  });
+
+  const subscribeMutation = useMutation({
+    mutationFn: subscribePress,
+    onSuccess: () => {
+      // 구독 목록 쿼리 무효화 → 자동 리페칭
+      queryClient.invalidateQueries({ queryKey: ['subscribedPresses'] });
+      switchTab?.(TAB_VALUES.SUBSCRIBED);
+    },
+  });
 
   const handleClick = () => {
-    if (isSubscribed(pressName)) {
+    if (subscribedPresses.includes(pressName)) {
       setShowAlert(true);
       return;
     }
-    subscribe(pressName);
-    switchTab?.(TAB_VALUES.SUBSCRIBED);
+    // 구독하기 API 호출
+    subscribeMutation.mutate(pressName);
   };
 
   return (
     <>
       <Button size="sm" className="w-18 cursor-pointer" onClick={handleClick}>
-        {isSubscribed(pressName) ? '× 해지하기' : '+ 구독하기'}
+        {subscribedPresses.includes(pressName) ? '× 해지하기' : '+ 구독하기'}
       </Button>
       {showAlert && (
         <SubscribeAlert
