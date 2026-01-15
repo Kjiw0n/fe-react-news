@@ -55,6 +55,7 @@ const NewsContents = ({
               <li
                 key={`${article.link}-${i}-${pageIdx}`}
                 className="max-w-132.5 cursor-pointer truncate hover:underline"
+                onClick={() => window.open(article.link, '_blank')}
               >
                 {article.title}
               </li>
