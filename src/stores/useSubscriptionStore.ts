@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 interface SubscriptionStore {
   subscribedPresses: string[];
+  setSubscribedPresses: (presses: string[]) => void;
   subscribe: (pressId: string) => void;
   unsubscribe: (pressId: string) => void;
   isSubscribed: (pressId: string) => boolean;
@@ -9,6 +10,7 @@ interface SubscriptionStore {
 
 const useSubscriptionStore = create<SubscriptionStore>((set, get) => ({
   subscribedPresses: [],
+  setSubscribedPresses: (presses) => set({ subscribedPresses: presses }),
   subscribe: (pressId) =>
     set((state) => ({
       subscribedPresses: [...state.subscribedPresses, pressId],
