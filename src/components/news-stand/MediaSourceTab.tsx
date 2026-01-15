@@ -12,6 +12,11 @@ interface MediaSourceTabProps {
 const MediaSourceTab = ({ activeTab, setActiveTab }: MediaSourceTabProps) => {
   const { subscribedPresses } = useSubscriptionStore();
 
+  // const { data }: { data: RollingNewsItem[] } = useSuspenseQuery({
+  //   queryKey: ['rollingNews', track],
+  //   queryFn: fetchRollingNews,
+  // });
+
   if (subscribedPresses.length === 0) {
     setActiveTab(TAB_VALUES.ALL);
   }
