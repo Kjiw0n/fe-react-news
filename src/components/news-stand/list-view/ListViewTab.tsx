@@ -17,14 +17,14 @@ const ListViewTab = ({
 }) => {
   return (
     <div
-      className={`flex cursor-pointer flex-row items-center gap-2 px-4 hover:underline ${
+      className={`flex cursor-pointer flex-row items-center gap-2 px-4 ${
         selectedTab === category
           ? 'selected-bold14 text-white-default bg-brand-60 bg-fill-progress animate-fill-progress w-41.5 justify-between'
           : 'available-medium14 text-weak'
       }`}
       onClick={() => handleTabClick(category)}
     >
-      <span>{category}</span>
+      <span className="hover:underline">{category}</span>
       {selectedTab === category &&
         (activeTab === TAB_VALUES.ALL ? (
           <PageIndicator
