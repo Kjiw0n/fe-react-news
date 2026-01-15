@@ -1,4 +1,4 @@
-import { unsubscribePress } from '@/apis/subscription';
+import { useUnsubscribePressMutation } from '@/apis/subscription';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -9,7 +9,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface SubscribeAlertProps {
   pressName: string;
@@ -22,19 +21,14 @@ const SubscribeAlert = ({
   open,
   onOpenChange,
 }: SubscribeAlertProps) => {
-  const queryClient = useQueryClient();
-
-  const unsubscribeMutation = useMutation({
-    mutationFn: unsubscribePress,
-    onSuccess: () => {
-      // 자동으로 getSubscribedPresses() 다시 호출
-      queryClient.invalidateQueries({ queryKey: ['subscribedPresses'] });
-      onOpenChange(false);
-    },
-  });
+  const unsubscribeMutation = useUnsubscribePressMutation();
 
   const handleUnsubscribe = () => {
-    unsubscribeMutation.mutate(pressName);
+    unsubscribeMutation.mutate(pressName, {
+      onSuccess: () => {
+        onOpenChange(false);
+      },
+    });
   };
 
   return (

@@ -1,3 +1,25 @@
+import { TAB_VALUES } from '@/constants/type';
+import { useQuery } from '@tanstack/react-query';
+
+export const usePressAllQuery = (view: 'list' | 'grid') =>
+  useQuery({
+    queryKey: ['press', 'all', view],
+    queryFn: () => fetchAllPress(view),
+    staleTime: 1000 * 60 * 5,
+  });
+
+export const usePressSubscribedQuery = (
+  view: 'list' | 'grid',
+  activeTab?: string,
+) =>
+  useQuery({
+    queryKey: ['subscribedPresses', 'press', view],
+    queryFn: () => fetchSubscribedPress(view),
+    staleTime: 1000 * 60 * 5,
+    enabled: activeTab === TAB_VALUES.SUBSCRIBED,
+  });
+
+// --- api ---
 export const fetchAllPress = async (view: 'list' | 'grid') => {
   const res = await fetch(`/api/press/all?view=${view}`);
   if (!res.ok) throw new Error('Failed to fetch all press data');

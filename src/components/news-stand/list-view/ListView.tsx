@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import NewsContents from './NewsContents';
-import {
-  TAB_VALUES,
-  type PressDataListResponse,
-  type TabValue,
-} from '@/constants/type';
+import { TAB_VALUES, type TabValue } from '@/constants/type';
 import ListViewTab from './ListViewTab';
-import { fetchAllPress, fetchSubscribedPress } from '@/apis/news';
+import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
 
 interface ListViewProps {
   switchTab: (tabType: TabValue) => void;
@@ -16,22 +12,27 @@ interface ListViewProps {
 export const ITEM_CYCLE_INTERVAL_MS = 20000;
 
 const ListView = ({ switchTab, activeTab }: ListViewProps) => {
-  const [pressListData, setPressListData] = useState<PressDataListResponse>({});
-  const [categoryList, setCategoryList] = useState<string[]>([]);
+  const { data: allPressData } = usePressAllQuery('list');
+  const { data: subscribedPressData } = usePressSubscribedQuery(
+    'list',
+    activeTab,
+  );
+
+  const pressListData = useMemo(() => {
+    if (activeTab === TAB_VALUES.ALL) {
+      return allPressData ?? {};
+    } else {
+      return subscribedPressData ?? {};
+    }
+  }, [activeTab, allPressData, subscribedPressData]);
+
+  const categoryList = useMemo(
+    () => Object.keys(pressListData),
+    [pressListData],
+  );
+
   const [selectedTab, setSelectedTab] = useState<string>(categoryList[0]);
   const [pageIdx, setPageIdx] = useState(0);
-
-  useEffect(() => {
-    const loadPressData = async () => {
-      const data =
-        activeTab === TAB_VALUES.ALL
-          ? await fetchAllPress('list')
-          : await fetchSubscribedPress('list');
-      setPressListData(data);
-      setCategoryList(Object.keys(data));
-    };
-    loadPressData();
-  }, [activeTab]);
 
   useEffect(() => {
     if (categoryList.length === 0) return;
@@ -67,7 +68,7 @@ const ListView = ({ switchTab, activeTab }: ListViewProps) => {
   const currentPressData = pressGroup?.[currentPressName] || [];
 
   return (
-    <div key={activeTab} className="flex w-232.5 flex-col">
+    <div className="flex w-232.5 flex-col">
       <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start overflow-x-auto border whitespace-nowrap">
         {categoryList.map((category) => (
           <ListViewTab

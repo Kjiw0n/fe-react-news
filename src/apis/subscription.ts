@@ -1,3 +1,42 @@
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
+
+export const useSubscribedPresses = () =>
+  useSuspenseQuery({
+    queryKey: ['subscribedPresses'],
+    queryFn: getSubscribedPresses,
+  });
+
+export const useSubscribePressMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: subscribePress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['subscribedPresses'],
+      });
+    },
+  });
+};
+
+export const useUnsubscribePressMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: unsubscribePress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['subscribedPresses'],
+      });
+    },
+  });
+};
+
+// --- api ---
 export const unsubscribePress = async (pressName: string) => {
   const res = await fetch(`/api/subscription?pressName=${pressName}`, {
     method: 'DELETE',
