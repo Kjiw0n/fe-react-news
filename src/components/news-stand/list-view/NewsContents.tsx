@@ -1,5 +1,9 @@
 import SubscribeButton from '@/components/commons/SubscribeButton';
-import { type PressDataListResponse, type TabValue, ThemeState } from '@/constants/type';
+import {
+  type PressDataListResponse,
+  type TabValue,
+  ThemeState,
+} from '@/constants/type';
 import { useThemeStore } from '@/stores/useThemeStore';
 
 interface NewsContentsProps {
