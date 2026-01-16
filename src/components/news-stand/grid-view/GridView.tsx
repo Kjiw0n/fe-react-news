@@ -4,12 +4,10 @@ import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
 import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
 import NewsPressItem from './NewsPressItem';
+import { useNewsStandTab } from '../NewsStandTabProvider';
 
-interface GridViewProps {
-  activeTab?: string;
-}
-
-const GridView = ({ activeTab }: GridViewProps) => {
+const GridView = () => {
+  const { activeTab } = useNewsStandTab();
   const [pageIdx, setPageIdx] = useState(0);
 
   const { data: allPressData } = usePressAllQuery('grid');

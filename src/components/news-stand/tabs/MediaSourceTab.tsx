@@ -4,21 +4,18 @@ import { cn } from '@/lib/utils';
 import { useSubscribedPresses } from '@/apis/subscription';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Suspense, useEffect } from 'react';
+import { useNewsStandTab } from '../NewsStandTabProvider';
 
-interface MediaSourceTabProps {
-  activeTab: string;
-  onValueChange: (tab: string) => void;
-}
-
-const MediaSourceTab = ({ activeTab, onValueChange }: MediaSourceTabProps) => {
+const MediaSourceTab = () => {
+  const { activeTab, setActiveTab } = useNewsStandTab();
   return (
-    <Tabs value={activeTab} onValueChange={onValueChange}>
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="gap-6">
         <TabsTrigger className="cursor-pointer" value={TAB_VALUES.ALL}>
           전체 언론사
         </TabsTrigger>
         <Suspense fallback={<SubscribedPressesTabItemFallback />}>
-          <SubscribedPressesTabItem onValueChange={onValueChange} />
+          <SubscribedPressesTabItem handleTabChange={setActiveTab} />
         </Suspense>
       </TabsList>
     </Tabs>
@@ -26,19 +23,19 @@ const MediaSourceTab = ({ activeTab, onValueChange }: MediaSourceTabProps) => {
 };
 
 interface SubscribedPressesTabItemProps {
-  onValueChange: (tab: string) => void;
+  handleTabChange: (tab: string) => void;
 }
 
 const SubscribedPressesTabItem = ({
-  onValueChange,
+  handleTabChange,
 }: SubscribedPressesTabItemProps) => {
   const { data: subscribedPresses = [] } = useSubscribedPresses();
 
   useEffect(() => {
     if (subscribedPresses.length === 0) {
-      onValueChange(TAB_VALUES.ALL);
+      handleTabChange(TAB_VALUES.ALL);
     }
-  }, [subscribedPresses, onValueChange]);
+  }, [subscribedPresses, handleTabChange]);
 
   return (
     <TabsTrigger
