@@ -1,17 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import NewsContents from './NewsContents';
-import { TAB_VALUES, type TabValue } from '@/constants/type';
+import { TAB_VALUES } from '@/constants/type';
 import ListViewTab from './ListViewTab';
 import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
-
-interface ListViewProps {
-  switchTab: (tabType: TabValue) => void;
-  activeTab?: string;
-}
+import { useNewsStandTab } from '../NewsStandTabProvider';
+// import { useNewsStandTab } from '../NewsStandTabProvider';
 
 export const ITEM_CYCLE_INTERVAL_MS = 20000;
 
-const ListView = ({ switchTab, activeTab }: ListViewProps) => {
+const ListView = () => {
+  const { activeTab, setActiveTab } = useNewsStandTab();
   const { data: allPressData } = usePressAllQuery('list');
   const { data: subscribedPressData } = usePressSubscribedQuery(
     'list',
@@ -88,7 +86,7 @@ const ListView = ({ switchTab, activeTab }: ListViewProps) => {
           pressListData={pressListData}
           selectedTab={selectedTab}
           pageIdx={pageIdx}
-          switchTab={switchTab}
+          switchTab={setActiveTab}
         />
       )}
     </div>
