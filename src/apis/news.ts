@@ -19,7 +19,7 @@ export const usePressSubscribedQuery = (
     enabled: activeTab === TAB_VALUES.SUBSCRIBED,
   });
 
-  export const useRollingNewsQuery = () =>
+export const useRollingNewsQuery = () =>
   useSuspenseQuery({
     queryKey: ['rollingNews'],
     queryFn: fetchRollingNews,
