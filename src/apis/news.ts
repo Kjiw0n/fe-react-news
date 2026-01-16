@@ -1,5 +1,5 @@
 import { TAB_VALUES } from '@/constants/type';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const usePressAllQuery = (view: 'list' | 'grid') =>
   useQuery({
@@ -18,6 +18,13 @@ export const usePressSubscribedQuery = (
     staleTime: 1000 * 60 * 5,
     enabled: activeTab === TAB_VALUES.SUBSCRIBED,
   });
+
+  export const useRollingNewsQuery = () =>
+  useSuspenseQuery({
+    queryKey: ['rollingNews'],
+    queryFn: fetchRollingNews,
+  });
+
 
 // --- api ---
 export const fetchAllPress = async (view: 'list' | 'grid') => {

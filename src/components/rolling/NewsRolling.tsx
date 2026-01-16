@@ -1,16 +1,12 @@
 import { Suspense, useState } from 'react';
 import RollingSection from './RollingSection';
 import { Skeleton } from '../ui/skeleton';
-import { fetchRollingNews } from '@/apis/news';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRollingNewsQuery } from '@/apis/news';
 
 const NewsRolling = () => {
   const [isPaused, setIsPaused] = useState(false);
 
-  const { data: rollingNews } = useSuspenseQuery({
-    queryKey: ['rollingNews'],
-    queryFn: fetchRollingNews,
-  });
+  const { data: rollingNews } = useRollingNewsQuery();
 
   return (
     <div className="mb-8 flex w-full gap-2.5">
