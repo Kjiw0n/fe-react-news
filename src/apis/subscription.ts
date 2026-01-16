@@ -6,7 +6,7 @@ import {
 
 export const useSubscribedPresses = () =>
   useSuspenseQuery({
-    queryKey: ['subscribedPresses'],
+    queryKey: ['subscribed'],
     queryFn: getSubscribedPresses,
   });
 
@@ -17,7 +17,7 @@ export const useSubscribePressMutation = () => {
     mutationFn: subscribePress,
     onSuccess: async () => {
       return await queryClient.invalidateQueries({
-        queryKey: ['subscribedPresses'],
+        queryKey: ['subscribed'],
       });
     },
   });
@@ -30,7 +30,7 @@ export const useUnsubscribePressMutation = () => {
     mutationFn: unsubscribePress,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['subscribedPresses'],
+        queryKey: ['subscribed'],
       });
     },
   });

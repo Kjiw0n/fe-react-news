@@ -1,8 +1,6 @@
-import { TAB_VALUES } from '@/constants/type';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/assets/svg';
-import { shuffle } from '@/lib/utils';
-import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
+import { usePressList } from '@/apis/news';
 import NewsPressItem from './NewsPressItem';
 import { useNewsStandTab } from '../NewsStandTabProvider';
 
@@ -10,21 +8,7 @@ const GridView = () => {
   const { activeTab } = useNewsStandTab();
   const [pageIdx, setPageIdx] = useState(0);
 
-  const { data: allPressData } = usePressAllQuery('grid');
-  const { data: subscribedPressData } = usePressSubscribedQuery(
-    'grid',
-    activeTab,
-  );
-
-  const selectedData = useMemo(() => {
-    if (activeTab === TAB_VALUES.ALL) {
-      // 전체 데이터에서 96개를 무작위로 추출 (새로 고침 시에만 실행됨)
-      if (!allPressData) return [];
-      return shuffle(allPressData).slice(0, 96);
-    } else {
-      return subscribedPressData ?? [];
-    }
-  }, [activeTab, allPressData, subscribedPressData]);
+  const { data: selectedData = [] } = usePressList(activeTab, 'grid');
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
