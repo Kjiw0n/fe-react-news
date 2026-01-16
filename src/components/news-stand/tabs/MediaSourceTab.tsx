@@ -1,4 +1,4 @@
-import { TAB_VALUES } from '@/constants/type';
+import { TAB_VALUES, type TabValue } from '@/constants/type';
 
 import { cn } from '@/lib/utils';
 import { useSubscribedPresses } from '@/apis/subscription';
@@ -23,7 +23,7 @@ const MediaSourceTab = () => {
 };
 
 interface SubscribedPressesTabItemProps {
-  handleTabChange: (tab: string) => void;
+  handleTabChange: (tab: TabValue) => void;
 }
 
 const SubscribedPressesTabItem = ({

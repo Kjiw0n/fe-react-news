@@ -1,5 +1,5 @@
 import { TAB_VALUES } from '@/constants/type';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Icon from '@/assets/svg';
 import { shuffle } from '@/lib/utils';
 import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
@@ -26,11 +26,6 @@ const GridView = () => {
     }
   }, [activeTab, allPressData, subscribedPressData]);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPageIdx(0);
-  }, [activeTab]);
-
   // 현재 페이지의 데이터 가져오기
   const currentPageData = selectedData.slice(pageIdx * 24, (pageIdx + 1) * 24);
 
@@ -41,7 +36,10 @@ const GridView = () => {
   );
 
   return (
-    <div className="border-border-default relative grid grid-cols-6 border-t border-l">
+    <div
+      key={activeTab}
+      className="border-border-default relative grid grid-cols-6 border-t border-l"
+    >
       {gridItems.map((item, index) => (
         <NewsPressItem
           key={item?.press || `empty-${index}`}

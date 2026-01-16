@@ -29,19 +29,19 @@ const ListView = () => {
     [pressListData],
   );
 
-  const [selectedTab, setSelectedTab] = useState<string>(categoryList[0]);
+  const [selectedTab, setSelectedTab] = useState<string>('');
   const [pageIdx, setPageIdx] = useState(0);
 
-  useEffect(() => {
-    if (categoryList.length === 0) return;
+  // 실제로 사용할 탭 (selectedTab이 비어있거나 유효하지 않으면 첫 번째 카테고리 사용)
+  const currentTab = useMemo(() => {
+    if (selectedTab && categoryList.includes(selectedTab)) {
+      return selectedTab;
+    }
+    return categoryList[0] || '';
+  }, [selectedTab, categoryList]);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSelectedTab(categoryList[0]);
-    setPageIdx(0);
-  }, [categoryList, activeTab]);
-
   useEffect(() => {
-    const pressGroup = pressListData[selectedTab];
+    const pressGroup = pressListData[currentTab];
     if (!pressGroup) return;
 
     const pressNames = Object.keys(pressGroup);
@@ -52,7 +52,7 @@ const ListView = () => {
     }, ITEM_CYCLE_INTERVAL_MS);
 
     return () => clearInterval(interval);
-  }, [pressListData, selectedTab, pageIdx]);
+  }, [pressListData, currentTab, pageIdx]);
 
   const handleTabClick = (category: string) => {
     setSelectedTab(category);
@@ -60,7 +60,7 @@ const ListView = () => {
   };
 
   // view rendering
-  const pressGroup = pressListData[selectedTab];
+  const pressGroup = pressListData[currentTab];
   const pressNames = pressGroup ? Object.keys(pressGroup) : [];
   const currentPressName = pressNames[pageIdx];
   const currentPressData = pressGroup?.[currentPressName] || [];
@@ -72,7 +72,7 @@ const ListView = () => {
           <ListViewTab
             key={category + pageIdx}
             category={category}
-            selectedTab={selectedTab}
+            selectedTab={currentTab}
             pageIdx={pageIdx}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
@@ -84,7 +84,7 @@ const ListView = () => {
       {currentPressData.length > 0 && (
         <NewsContents
           pressListData={pressListData}
-          selectedTab={selectedTab}
+          selectedTab={currentTab}
           pageIdx={pageIdx}
           switchTab={setActiveTab}
         />

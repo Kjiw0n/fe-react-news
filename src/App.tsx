@@ -1,5 +1,6 @@
 import Header from './components/commons/Header';
 import NewsStand from './components/news-stand/NewsStand';
+import NewsStandTabProvider from './components/news-stand/NewsStandTabProvider';
 import NewsRolling from './components/rolling/NewsRolling';
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
         <div className="flex h-full max-w-232.5 flex-col justify-center">
           <Header />
           <NewsRolling />
-          <NewsStand />
+          <NewsStandTabProvider>
+            <NewsStand />
+          </NewsStandTabProvider>
         </div>
       </div>
     </>
