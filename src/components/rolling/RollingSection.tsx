@@ -22,8 +22,8 @@ const RollingSection = ({
   onMouseEnter,
   onMouseLeave,
 }: RollingSectionProps) => {
-  const [index, setIndex] = useState(0);
-  const [isMoving, setIsMoving] = useState(false);
+  const [index, setIndex] = useState(0); // left와 right의 data 길이가 같으므로 index 공유
+  const [isMoving, setIsMoving] = useState(false); // 애니메이션 상태
 
   useEffect(() => {
     if (isPaused || data.length === 0) return;
