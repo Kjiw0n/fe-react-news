@@ -25,7 +25,6 @@ export const usePressSubscribedQuery = (
     queryFn: fetchRollingNews,
   });
 
-
 // --- api ---
 export const fetchAllPress = async (view: 'list' | 'grid') => {
   const res = await fetch(`/api/press/all?view=${view}`);
