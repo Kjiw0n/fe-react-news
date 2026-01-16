@@ -1,31 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import NewsContents from './NewsContents';
-import { TAB_VALUES } from '@/constants/type';
 import ListViewTab from './ListViewTab';
-import { usePressAllQuery, usePressSubscribedQuery } from '@/apis/news';
+import { usePressList } from '@/apis/news';
 import { useNewsStandTab } from '../NewsStandTabProvider';
-// import { useNewsStandTab } from '../NewsStandTabProvider';
 
 export const ITEM_CYCLE_INTERVAL_MS = 20000;
 
 const ListView = () => {
   const { activeTab, setActiveTab } = useNewsStandTab();
-  const { data: allPressData } = usePressAllQuery('list');
-  const { data: subscribedPressData } = usePressSubscribedQuery(
-    'list',
-    activeTab,
-  );
 
-  const pressListData = useMemo(() => {
-    if (activeTab === TAB_VALUES.ALL) {
-      return allPressData ?? {};
-    } else {
-      return subscribedPressData ?? {};
-    }
-  }, [activeTab, allPressData, subscribedPressData]);
+  const { data: pressListData = {} } = usePressList(activeTab, 'list');
 
   const categoryList = useMemo(
-    () => Object.keys(pressListData),
+    () => (pressListData ? Object.keys(pressListData) : []),
     [pressListData],
   );
 
@@ -60,13 +47,18 @@ const ListView = () => {
   };
 
   // view rendering
-  const pressGroup = pressListData[currentTab];
+  const pressGroup =
+    pressListData && selectedTab ? pressListData[selectedTab] : null;
   const pressNames = pressGroup ? Object.keys(pressGroup) : [];
   const currentPressName = pressNames[pageIdx];
-  const currentPressData = pressGroup?.[currentPressName] || [];
+  const currentPressData =
+    pressGroup && currentPressName ? pressGroup[currentPressName] : [];
+
+  // 데이터가 없으면 렌더링 중단
+  if (!pressListData || categoryList.length === 0) return null;
 
   return (
-    <div className="flex w-232.5 flex-col">
+    <div className="flex min-h-100 w-232.5 flex-col">
       <div className="bg-surface-alt border-border-default flex h-10 w-full flex-row justify-start overflow-x-auto border whitespace-nowrap">
         {categoryList.map((category) => (
           <ListViewTab

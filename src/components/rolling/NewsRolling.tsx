@@ -19,7 +19,6 @@ const NewsRolling = () => {
       >
         <RollingSection
           data={rollingNews.left}
-          interval={5000}
           isPaused={isPaused}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -34,7 +33,6 @@ const NewsRolling = () => {
       >
         <RollingSection
           data={rollingNews.right}
-          interval={5000}
           delay={1000}
           isPaused={isPaused}
           onMouseEnter={() => setIsPaused(true)}

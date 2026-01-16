@@ -1,23 +1,27 @@
 import { TAB_VALUES } from '@/constants/type';
+import { shuffle } from '@/lib/utils';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
-export const usePressAllQuery = (view: 'list' | 'grid') =>
-  useQuery({
-    queryKey: ['press', 'all', view],
-    queryFn: () => fetchAllPress(view),
-    staleTime: 1000 * 60 * 5,
-  });
+export const usePressList = (activeTab: string, view: 'list' | 'grid') => {
+  return useQuery({
+    queryKey: [activeTab, 'press', view],
+    queryFn: () => {
+      if (activeTab === TAB_VALUES.ALL) {
+        return fetchAllPress(view);
+      }
+      return fetchSubscribedPress(view);
+    },
 
-export const usePressSubscribedQuery = (
-  view: 'list' | 'grid',
-  activeTab?: string,
-) =>
-  useQuery({
-    queryKey: ['subscribedPresses', 'press', view],
-    queryFn: () => fetchSubscribedPress(view),
+    select: (data) => {
+      if (view === 'grid' && activeTab === TAB_VALUES.ALL) {
+        return Array.isArray(data) ? shuffle(data).slice(0, 96) : [];
+      }
+      return data;
+    },
+
     staleTime: 1000 * 60 * 5,
-    enabled: activeTab === TAB_VALUES.SUBSCRIBED,
   });
+};
 
 export const useRollingNewsQuery = () =>
   useSuspenseQuery({
