@@ -47,12 +47,10 @@ const ListView = () => {
   };
 
   // view rendering
-  const pressGroup =
-    pressListData && selectedTab ? pressListData[selectedTab] : null;
+  const pressGroup = pressListData[currentTab];
   const pressNames = pressGroup ? Object.keys(pressGroup) : [];
   const currentPressName = pressNames[pageIdx];
-  const currentPressData =
-    pressGroup && currentPressName ? pressGroup[currentPressName] : [];
+  const currentPressData = pressGroup?.[currentPressName] || [];
 
   // 데이터가 없으면 렌더링 중단
   if (!pressListData || categoryList.length === 0) return null;
